@@ -32,6 +32,13 @@ Planteary Wonders is an amazing mod and while it works great with Evolved, wante
 [*] Stellaris Evolved + Planteary Wonders
 [/list]
 
+[h1]Contacts And Links[/h1]
+[list]
+[*] Discord: MrRoAdd#4232
+[*] Github: https://github.com/adriangaro/evolved-planetary-wonders
+[*] Contributions, bug reports and fixes are appreciated!
+[/list]
+
 [h1]Thanks[/h1]
 [b]Namfoodle[/b]
 For his amazing and flavorful mod, giving me even more opportunities for tall play.
