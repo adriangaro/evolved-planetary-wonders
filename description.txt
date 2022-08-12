@@ -1,0 +1,39 @@
+[h1]Changes and Additions[/h1]
+[list]
+[*] Planetary Wonders adjusted to evolved job swaps (hive mind synapses), politician swaps (ai auths), and other generals swaps.
+[*] Civic specific wonders (Unhallowed Necropolis) allowed with other evolved necromantic/death/cronicler swaps.
+[*] Resource wonders take into consideration all district types, including aquatic, ecoworld, elysium, ringworld, habitat, protoworld districts.
+[*] Resource wonders have job swaps depending on aquatic civic and empire type.
+[*] Solipsist Debate Hall has effects for new evolved hive mind civics.
+[*] Space Elevator now has job and effect swaps for trader machines, and a trading option for orbital logistics poly group.
+[*] Allow some Authoritarian buildings to Elitists, most vanilla Egalitarian (Liberal in Evolved) effects and wonders moved to Pluralist(Egalitarian in Evovled)/Coopearitve.
+[*] Megacorp branch office wonders now require T2 branch office capital, have some small increased effects at T3.
+[*] Megacorp branch office wonders now provide hired/private jobs instead of the normal variants where applicable, all of them provide Consulars like most Evolved branch office buildings.
+[*] Using Evolved habitat trigger instead of checking only for habitat planet class, offering support for more habitat types (mainly PD planetary habitats).
+[*] Together with the above, now habitats can support planetary wonders if you either have Voidborn or you made the habitat into a arcology habitat.
+[*] Space Elevator allowed on pd habitats with the restrictions mentioned above.
+[*] More miscellaneous changes for compatibility. 
+[/list]
+
+[h1]Motivation[/h1]
+Planteary Wonders is an amazing mod and while it works great with Evolved, wanted more integration for consistency and immersion.
+
+[h1]Future Possible Changes/To Do[/h1]
+[list]
+[*] Add more effects/wonders for new Evolved ethics and civics if possible.
+[*] Add branch office wonders for empathic gestalt planets, and add branch office wonders for cooperative gestalt to use on other empires (or reuse existing ones).
+[*] Move some of the reusable logic to either Evolved and Planetary Wonders where it make sense (with modder approval).
+[/list]
+
+[h1]Mod Load Order[/h1]
+[list]
+[*] Planteary Wonders
+[*] Stellaris Evolved - Alpha
+[*] Stellaris Evolved + Planteary Wonders
+[/list]
+
+[h1]Thanks[/h1]
+[b]Namfoodle[/b]
+For his amazing and flavorful mod, giving me even more opportunities for tall play.
+[b]Rodahtnov[/b]
+For the insights and help he has given me to balance this around Stellaris Evolved. A great overhaul without which I can't play.

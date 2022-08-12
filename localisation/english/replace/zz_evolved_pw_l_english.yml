@@ -1,0 +1,14 @@
+﻿l_english:
+ pw_policy_orbital_logistics_trade: "Orbital Trading"
+ pw_policy_orbital_logistics_trade_name: "Orbital Trading"
+ pw_policy_orbital_logistics_trade_desc: "Establish space blockchain infrastructure in the $pw_building_space_elevator$, that provides increased efficiency of transaction validation and reconciliation.\n\n$pw_policy_orbital_logistics_trade_tooltip$"
+ pw_policy_orbital_logistics_trade_tooltip: "$pw_space_elevator$: §G+15%§! planetary £trade_value£ §YTrade Value§!."
+
+ pw_demetrius_fields_jobs_add_regular: "Provides §G+1§! £job_farmer£ §Y$job_farmer$§! job for each §Y$district_farming$§! or equivalent district (sometimes more than one job) on the planet."
+ pw_demetrius_fields_jobs_add_gestalt: "Provides §G+1§! £job_agri_drone£ §Y$job_agri_drone$§! job for each §Y$district_farming$§! or equivalent district (sometimes more than one job) on the planet."
+
+ pw_helios_tower_jobs_add_regular: "Provides §G+1§! £job_technician£ §Y$job_technician$§! job for each §Y$district_generator$§! or equivalent district (sometimes more than one job) on the planet."
+ pw_helios_tower_jobs_add_gestalt: "Provides §G+1§! £job_technician_drone£ §Y$job_technician_drone$§! job for each §Y$district_generator$§! or equivalent district (sometimes more than one job) on the planet."
+
+ pw_erebus_project_jobs_add_regular: "Provides §G+1§! £job_miner£ §Y$job_miner$§! job for each §Y$district_mining$§! or equivalent district (sometimes more than one job) on the planet."
+ pw_erebus_project_jobs_add_gestalt: "Provides §G+1§! £job_mining_drone£ §Y$job_mining_drone$§! job for each §Y$district_mining$§! or equivalent district (sometimes more than one job) on the planet."

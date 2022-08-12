@@ -1,0 +1,99 @@
+#Space Elevator (Gestalt)
+pw_policy_orbital_logistics = {
+	potential = {
+		has_technology = pw_tech_space_elevator_orbital_logistics
+	}
+
+	allow = {
+		any_owned_planet = {
+			has_active_building = pw_building_space_elevator
+		}
+	}
+
+	option = {
+		name = pw_policy_orbital_logistics_drone_care
+		policy_flags = { pw_policy_orbital_logistics_drone_care }
+
+		on_enabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_care_tooltip
+		}
+
+		on_disabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_care_tooltip
+		}
+
+		ai_weight = {
+			weight = 0
+		}
+	}
+
+	option = {
+		name = pw_policy_orbital_logistics_trade
+		policy_flags = { pw_policy_orbital_logistics_trade }
+
+		potential = { tec_is_trade_gestalt = yes }
+
+		on_enabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_care_tooltip
+		}
+
+		on_disabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_care_tooltip
+		}
+
+		ai_weight = {
+			weight = 0
+		}
+	}
+
+	option = {
+		name = pw_policy_orbital_logistics_drone_scan
+		policy_flags = { pw_policy_orbital_logistics_drone_scan }
+
+		on_enabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_scan_tooltip
+		}
+
+		on_disabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_drone_scan_tooltip
+		}
+
+		ai_weight = {
+			weight = 0
+		}
+	}
+
+	option = {
+		name = pw_policy_orbital_logistics_gestalt_pylon
+		policy_flags = { pw_policy_orbital_logistics_gestalt_pylon }
+
+		on_enabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_gestalt_pylon_tooltip
+		}
+
+		on_disabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_gestalt_pylon_tooltip
+		}
+
+		ai_weight = {
+			weight = 0
+		}
+	}
+
+	option = {
+		name = pw_policy_orbital_logistics_production_supply
+		policy_flags = { pw_policy_orbital_logistics_production_supply }
+
+		on_enabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_production_supply_tooltip
+		}
+
+		on_disabled = {
+			# custom_tooltip = pw_policy_orbital_logistics_production_supply_tooltip
+		}
+
+		ai_weight = {
+			weight = 10
+		}
+	}
+}

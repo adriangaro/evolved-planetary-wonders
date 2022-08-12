@@ -1,0 +1,206 @@
+tec_pw_is_egalitarian = {
+	OR = {
+		is_egalitarian = yes
+		is_pluralist = yes
+	}
+}
+
+tec_pw_is_authoritarian = {
+	OR = {
+		is_authoritarian = yes
+		is_elitist = yes
+	}
+}
+
+tec_pw_voidborn_or_arcology_hab = {
+	OR = {
+		owner = { has_ascension_perk = ap_voidborn }
+		tec_pw_is_arcology_habitat = yes
+	}
+}
+
+tec_pw_is_arcology_habitat = {
+	has_planet_flag = tec_arcology_habitat
+}
+
+tec_pw_is_psionic_ascended = {
+	OR = {
+		has_ascension_perk = ap_transcendence
+		has_ascension_perk = ap_tec_biopsionic
+		has_ascension_perk = ap_tec_cyberpsionic
+		has_ascension_perk = ap_tec_hive_psionic_2
+	}
+}
+
+tec_pw_is_biological_ascended = {
+	OR = {
+		has_ascension_perk = ap_evolutionary_mastery
+		has_ascension_perk = ap_tec_biopsionic
+		has_ascension_perk = ap_tec_replicant
+	}
+}
+
+tec_pw_is_cybernetic_ascended = {
+	OR = {
+		has_ascension_perk = ap_tec_cybernetic_fascination
+		has_ascension_perk = ap_tec_cyberpsionic
+		has_ascension_perk = ap_tec_replicant
+	}
+}
+
+tec_pw_is_synthetic_ascended = {
+	OR = {
+		has_ascension_perk = ap_synthetic_evolution
+		has_ascension_perk = ap_tec_replicant
+	}
+}
+
+tec_pw_is_machine_asceneded = {
+	OR = {
+		has_ascension_perk = ap_tec_machine_mechanic_2
+	}
+}
+
+tec_pw_is_ascneded = {
+	OR = {
+		tec_pw_is_psionic_ascended = yes
+		tec_pw_is_biological_ascended = yes
+		tec_pw_is_cybernetic_ascended = yes
+		tec_pw_is_synthetic_ascended = yes
+		tec_pw_is_machine_asceneded = yes
+	}
+}
+
+tec_pw_solipsis_ammenities = {
+	OR = {
+		has_valid_civic = civic_hive_ascetic
+	}
+}
+
+tec_pw_solipsis_synapses = {
+	OR = {
+		has_valid_civic = civic_hive_divided_attention
+		has_valid_civic = civic_tec_hive_everevolving
+		has_valid_civic = civic_tec_hive_cerebrates
+		has_valid_civic = civic_tec_hive_cerebrates_cyborg
+		has_valid_civic = civic_tec_hive_node_cyborg
+		has_ethic = ethic_gestalt_introspective
+	}
+}
+
+tec_pw_solipsis_brain = {
+	OR = {
+		has_valid_civic = civic_hive_natural_neural_network
+		has_valid_civic = civic_tec_hive_cyberoverclock
+		has_valid_civic = civic_tec_hive_mindflayers
+		has_ethic = ethic_gestalt_extrospective
+	}
+}
+
+tec_pw_solipsis_unity = {
+	OR = {
+		has_valid_civic = civic_hive_one_mind
+		has_valid_civic = civic_tec_hive_anaxiomatic
+		has_valid_civic = civic_tec_hive_node
+		has_valid_civic = civic_tec_hive_cybernetwork
+		has_valid_civic = civic_tec_pu_neuroslug
+	}
+}
+
+tec_pw_solipsis_research = {
+	OR = {
+		has_valid_civic = civic_hive_pooled_knowledge
+		has_valid_civic = civic_tec_hive_myoneural
+		has_valid_civic = civic_tec_hive_neuraxial
+		has_valid_civic = civic_tec_hive_neuraxial_cyborg
+		has_valid_civic = civic_tec_se_elders
+	}
+}
+
+tec_pw_solipsis_armies = {
+	OR = {
+		has_valid_civic = civic_hive_strength_of_legions
+		has_valid_civic = civic_tec_hive_necrophage
+		has_valid_civic = civic_tec_hive_territorial
+	}
+}
+
+tec_pw_solipsis_admins = {
+	OR = {
+		has_valid_civic = civic_hive_subspace_ephapse
+		has_valid_civic = civic_tec_hive_pompous
+	}
+}
+
+tec_pw_solipsis_simple = {
+	OR = {
+		has_valid_civic = civic_hive_subsumed_will
+		has_valid_civic = civic_tec_hive_menial
+		has_valid_civic = civic_tec_wastelander_hive
+		has_valid_civic = civic_tec_mecha_automation
+	}
+}
+
+tec_pw_solipsis_warrior = {
+	OR = {
+		has_valid_civic = civic_hive_devouring_swarm
+		has_valid_civic = civic_tec_hive_percussive
+		has_ethic = ethic_gestalt_apathy
+	}
+}
+
+tec_pw_solipsis_crime_reduction = {
+	OR = {
+		has_valid_civic = civic_hive_empath
+		has_ethic = ethic_gestalt_empathy
+		has_valid_civic = civic_tec_hive_symbiotic
+	}
+}
+
+tec_pw_solipsis_habitability = {
+	OR = {
+		has_valid_civic = civic_hive_idyllic_bloom
+		has_ethic = ethic_gestalt_preservation
+		has_valid_civic = civic_tec_hive_genetic
+		has_valid_civic = civic_tec_gaia_affinity
+		has_valid_civic = civic_tec_gaia_children
+	}
+}
+
+tec_pw_solipsis_maintainance = {
+	OR = {
+		has_valid_civic = civic_tec_hive_organicarch
+		has_valid_civic = civic_tec_postapoc_irradiated
+	}
+}
+
+tec_pw_solipsis_build = {
+	OR = {
+		has_valid_civic = civic_tec_hive_engineers
+		has_valid_civic = civic_tec_hive_eyesinthesky
+		has_valid_civic = civic_tec_hive_functional_architecture
+		has_ethic = ethic_gestalt_disregard
+		has_valid_civic = civic_tec_vaultdwellers
+		has_valid_civic = civic_tec_mecha_perfectionists
+	}
+}
+
+tec_pw_solipsis_broodlord = {
+	OR = {
+		has_valid_civic = civic_tec_hive_eusocial
+	}
+}
+
+tec_pw_is_pluralist_or_socialism = {
+	OR = {
+		is_pluralist = yes
+		is_socialism = yes
+	}
+}
+
+tec_pw_is_elitist_or_competitive = {
+	OR = {
+		is_elitist = yes
+		is_competitive = yes
+	}
+}
