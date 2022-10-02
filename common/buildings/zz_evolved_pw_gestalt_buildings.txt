@@ -516,6 +516,32 @@ pw_building_conduit_of_unity_1 = {
 		mult = value:tec_pw_assembly_job_count
 	}
 
+	#Lubricants
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				is_machine_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		modifier = {
+			job_bath_attendant_machine_add = 1
+		}
+	}
+
+	#Permutation
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				is_hive_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		modifier = {
+			job_bath_attendant_hive_add = 1
+		}
+	}
+
 	#Stability from ambition
 	triggered_planet_modifier = {
 		potential = {
@@ -635,6 +661,29 @@ pw_building_conduit_of_unity_1 = {
 			}
 		}
 		text =job_tec_bioengineer_drone_effect_desc
+	}
+
+	#Lubricant
+	triggered_desc = {
+		trigger = {
+			exists = owner
+			owner = {
+				is_machine_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		text = job_toxic_baths_effect_machine_desc
+	}
+	#Permutation
+	triggered_desc = {
+		trigger = {
+			exists = owner
+			owner = {
+				is_hive_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		text = job_toxic_baths_effect_hive_desc
 	}
 
 	ai_weight = {
@@ -1109,6 +1158,19 @@ pw_building_solipsist_debate_hall = {
 		}
 	}
 
+	#Permutation Drones
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				is_hive_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		modifier = {
+			job_bath_attendant_hive_add = 1
+		}
+	}
+
 	triggered_planet_modifier = {
 		potential = {
 			owner = {
@@ -1415,6 +1477,19 @@ pw_building_solipsist_debate_hall = {
 		}
 	}
 
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_edict = pw_wonders_beyond_ambition
+				has_valid_civic = civic_hive_toxic_baths
+			}
+		}
+		modifier = {
+			pop_growth_speed = 0.05
+		}
+	}
+
 
 	triggered_planet_modifier = {
 		potential = {
@@ -1570,6 +1645,18 @@ pw_building_solipsist_debate_hall = {
 			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
 		}
 		text = job_brain_drone_effect_desc
+	}
+
+	#Permutation
+	triggered_desc = {
+		trigger = {
+			exists = owner
+			owner = {
+				is_hive_empire = yes
+				has_toxic_baths = yes
+			}
+		}
+		text = job_toxic_baths_effect_hive_desc
 	}
 
 	triggered_desc = {
