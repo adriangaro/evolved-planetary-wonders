@@ -12,56 +12,25 @@ pw_d_ancient_cornucopia = {
 		district_farming_max = 1
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		modifier = {
-			job_farmer_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_farmer
+		regular_count = 3
+		regular_aquatic_count = 2
+		hive_count = 3
+		hive_aquatic_count = 2
+		machine_count = 3
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_regular_empire = yes
-			}
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_angler_add = 2
-			job_pearl_diver_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = {
-				tec_farming_aqua_district_swap = no
-			}
-		}
-		modifier = {
-			job_agri_drone_add = 3
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = yes
-				tec_farming_aqua_district_swap = yes
-			}
-		}
-		modifier = {
-			job_tec_aqua_drone_add = 2
-			job_tec_depth_drone_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_farmer_swaps
+		regular_count = 1
+		hive_count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 }
 
@@ -77,25 +46,24 @@ pw_d_ancient_solar_tower = {
 		planet_jobs_energy_produces_mult = 0.05
 		district_generator_max = 1
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		modifier = {
-			job_technician_add = 3
-		}
+	
+	inline_script = {
+		script = jobs/inline_evolved_technician
+		regular_count = 3
+		hive_count = 3
+		machine_count = 3
+		machine_aquatic_count = 2
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_technician_drone_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_technician_swaps
+		machine_count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 }
 
@@ -112,49 +80,24 @@ pw_d_ancient_mining_project = {
 		district_mining_max = 1
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_miner_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 3
+		regular_aquatic_count = 2
+		hive_count = 3
+		hive_aquatic_count = 2
+		machine_count = 3
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_miner_add = 2
-			job_pearl_diver_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_mining_drone_add = 3
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_drone_add = 2
-			job_tec_depth_drone_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_miner_swaps
+		regular_count = 1
+		hive_count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 }
 
@@ -303,7 +246,7 @@ pw_d_SE_skyhook = {
 		potential = {
 			exists = owner
 			OR = {
-				is_gestalt = no 
+				owner = { is_gestalt = no }
 				owner = { tec_is_trade_gestalt = yes }
 			}
 			has_deposit = pw_d_SE_space_ramp
@@ -389,193 +332,41 @@ pw_d_hidden_mantle_factory = {
 	}
 
 	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
-	}
+
+	
 
 	#Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				
-				is_crafter_empire = no
-			}
-		}
-		modifier = {
-			job_artisan_add = 1
-		}
-	}
-	#Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-		}
-		modifier = {
-			job_artificer_add = 1
-		}
-	}
-
-	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_miner_add = 1
-		}
-	}
-	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = no
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
-	}
-	#Catalytic Technician (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = no
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
-	}
-
-	#Hive Mind
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_alloy_drone_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
-	}
-
-	#Machine
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
-	}
-
-	#Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			owner = { country_uses_consumer_goods = yes }
-		}
-		modifier = {
-			job_artisan_drone_add = 1
-		}
+		"
 	}
+	
 
-	#Not Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
+	#Alloys (no CG)
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 1
+		regular_aquatic_count = 1
+		hive_count = 1
+		hive_aquatic_count = 1
+		machine_count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
+			owner = { country_uses_consumer_goods = yes }
+		"
 	}
 }
 
@@ -602,196 +393,38 @@ pw_d_hidden_mantle_factory_overdrive = {
 	}
 
 	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 
 	#Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = no
-			}
-		}
-		modifier = {
-			job_artisan_add = 1
-		}
-	}
-	#Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-		}
-		modifier = {
-			job_artificer_add = 1
-		}
-	}
-
-	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_miner_add = 1
-		}
-	}
-	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = no
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
-	}
-	#Catalytic Technician (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = no
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
-	}
-
-	#Hive Mind
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_alloy_drone_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
-	}
-
-	#Machine
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
-	}
-
-	#Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			owner = { country_uses_consumer_goods = yes }
-		}
-		modifier = {
-			job_artisan_drone_add = 1
-		}
+		"
 	}
 
-	#Not Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
+	#Alloys (no CG)
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 1
+		regular_aquatic_count = 1
+		hive_count = 1
+		hive_aquatic_count = 1
+		machine_count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
+			owner = { country_uses_consumer_goods = yes }
+		"
 	}
 }
 
@@ -815,101 +448,51 @@ pw_d_mantle_replicator = {
 
 	#Regular
 	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = ""
 	}
 
-	#Hive Mind
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_alloy_drone_add = 1
-		}
+	#Consumer Goods
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
+			owner = { country_uses_consumer_goods = yes }
+		"
 	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
+
+	#Alloys (no CG)
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 1
+		regular_aquatic_count = 1
+		hive_count = 1
+		hive_aquatic_count = 1
+		machine_count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
+			owner = { country_uses_consumer_goods = yes }
+		"
 	}
 
 	#Machine
 	#Replicator
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = replicator
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			exists = owner
 			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_replicator_add = 1
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
+		"
 	}
 }

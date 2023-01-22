@@ -1,0 +1,22 @@
+# buildings/resources/inline_tec_pw_wonder_extra
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_cost
+	trigger = "
+		planet = {
+			pw_has_any_planetary_wonder = yes
+		}
+	"
+	minerals = @pw_building_cost_extra
+	building = $building$
+}
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_upkeep
+	trigger = "
+	planet = {
+		pw_has_any_additional_planetary_wonder = yes
+	}
+	"
+	energy = @pw_building_upkeep_extra
+}

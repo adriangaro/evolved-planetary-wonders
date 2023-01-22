@@ -16,10 +16,7 @@ pw_building_erebus_project = {
 			tec_is_habitat = no
 			AND = {
 				tec_pw_voidborn_or_arcology_hab = yes
-				OR = {
-					has_planet_flag = mining_habitat
-					has_planet_flag = pd_mining_hab
-				}
+				tec_mining_prod_building_exception = yes
 			}
 		}
 	}
@@ -27,7 +24,7 @@ pw_building_erebus_project = {
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			tec_is_city_planet = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -45,7 +42,7 @@ pw_building_erebus_project = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_city_planet = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -55,167 +52,75 @@ pw_building_erebus_project = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_erebus_project }
+					OR = {
+						has_mining_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_mining_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_mining_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Mining director
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_mining_director
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_mining_director_add = 1
-		}
+		"
 	}
 
 	#Mining coordinator
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_mining_coordinator
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_mining_coordinator_add = 1
-		}
+		"
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_miner_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 1
+		regular_aquatic_count = 0.5
+		hive_count = 1
+		hive_aquatic_count = 0.5
+		machine_count = 1
 		mult = value:pw_mining_value
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_miner_add = 0.5
-			job_pearl_diver_add = 0.5
-		}
+	inline_script = {
+		script = jobs/inline_evolved_miner_swaps
+		regular_count = 0.5
+		hive_count = 0.5
 		mult = value:pw_mining_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
-		mult = value:pw_mining_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_drone_add = 0.5
-			job_tec_depth_drone_add = 0.5
-		}
-		mult = value:pw_mining_value
+		display = with_desc
+		trigger = ""
 	}
 
 	triggered_planet_modifier = {
@@ -229,15 +134,7 @@ pw_building_erebus_project = {
 	}
 
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -272,76 +169,6 @@ pw_building_erebus_project = {
 		text = pw_erebus_project_jobs_add_gestalt
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_mining_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_mining_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		text = job_miner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_reef_miner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_pearl_diver_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		text = job_mining_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_reef_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_depth_drone_effect_desc
-	}
-
 	on_built = {
 		planet_event = { id = pw_wonder.500 }
 	}
@@ -371,7 +198,7 @@ pw_building_erebus_project = {
 		}
 		modifier = {
 			factor = 10
-			tec_has_mining_designation = yes
+			has_mining_designation = yes
 		}
 		modifier = {
 			factor = 2
@@ -428,7 +255,7 @@ pw_building_erebus_fracking_plant = {
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			tec_is_city_planet = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -443,7 +270,7 @@ pw_building_erebus_fracking_plant = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_city_planet = yes
+			tec_is_city_world = yes
 		}
 
 		# Empire Unique:
@@ -452,85 +279,25 @@ pw_building_erebus_fracking_plant = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_erebus_fracking_plant }
+					OR = {
+						has_mining_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_mining_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_mining_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	planet_modifier = {
@@ -538,107 +305,61 @@ pw_building_erebus_fracking_plant = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Mining director
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_mining_director
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_mining_director_add = 2
-		}
-	}
-
-	#Chemist jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_chemist_add = 3
-		}
+		"
 	}
 
 	#Mining coordinator
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_mining_coordinator
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_mining_coordinator_add = 2
-		}
+		"
 	}
 
-	#Chemist Drone
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_chemist_drone_add = 3
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_miner_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 1
+		regular_aquatic_count = 0.5
+		hive_count = 1
+		hive_aquatic_count = 0.5
+		machine_count = 1
 		mult = value:pw_mining_value
+		display = with_desc
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_evolved_miner_swaps
+		regular_count = 0.5
+		hive_count = 0.5
+		mult = value:pw_mining_value
+		display = with_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_miner_add = 0.5
-			job_pearl_diver_add = 0.5
-		}
-		mult = value:pw_mining_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		modifier = {
-			job_mining_drone_add = 1
-		}
-		mult = value:pw_mining_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_reef_drone_add = 0.5
-			job_tec_depth_drone_add = 0.5
-		}
-		mult = value:pw_mining_value
+	#Chemist jobs
+	inline_script = {
+		script = jobs/inline_evolved_chemist
+		count = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	triggered_planet_modifier = {
@@ -652,15 +373,7 @@ pw_building_erebus_fracking_plant = {
 	}
 
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -700,91 +413,6 @@ pw_building_erebus_fracking_plant = {
 		text = pw_erebus_project_jobs_add_gestalt
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_mining_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_mining_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_chemist_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_chemist_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		text = job_miner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_reef_miner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_pearl_diver_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = no }
-		}
-		text = job_mining_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_reef_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_mining_aqua_district_swap = yes }
-		}
-		text = job_tec_depth_drone_effect_desc
-	}
 
 	on_built = {
 		#This is an upgrade, so on_building_upgraded triggers for this.
@@ -816,14 +444,11 @@ pw_building_erebus_fracking_plant = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_mining_designation = yes
+			has_mining_designation = yes
 		}
 		modifier = {
 			factor = 3
-			OR = {
-				has_designation = col_rural
-				has_designation = col_rural_gestalt
-			}
+			has_rural_designation = yes
 		}
 		modifier = {
 			factor = 2
@@ -870,8 +495,7 @@ pw_building_helios_tower = {
 			AND = {
 				tec_pw_voidborn_or_arcology_hab = yes
 				OR = {
-					has_planet_flag = energy_habitat
-					has_planet_flag = pd_energy_hab
+					tec_energy_prod_building_exception = yes
 					owner = { is_gestalt = yes }
 				}
 			}
@@ -881,7 +505,7 @@ pw_building_helios_tower = {
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			tec_is_planet_city = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -899,7 +523,7 @@ pw_building_helios_tower = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_planet_city = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -909,165 +533,74 @@ pw_building_helios_tower = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_helios_tower }
+					OR = {
+						has_generator_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_energy_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_energy_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_extra / -2 ]
-			food = @\[ pw_building_upkeep_extra / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
-	#Energy director
-	triggered_planet_modifier = {
-		potential = {
+	# director
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_energy_director
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_energy_director_add = @pw_building_ruler_jobs
-		}
+		"
 	}
 
-	#Energy coordinator
-	triggered_planet_modifier = {
-		potential = {
+	# coordinator
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_energy_coordinator
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_energy_coordinator_add = @pw_building_ruler_jobs
-		}
+		"
 	}
 
-	#Add Regular Technician: 1 for each District 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_technician_add = 1
-		}
-		mult = value:pw_generator_value
+	inline_script = {
+		script = jobs/inline_evolved_technician
+		regular_count = 1
+		hive_count = 1
+		machine_count = 1
+		machine_aquatic_count = 0.5
+		mult = value:pw_generators_value
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = no }
-		}
-		modifier = {
-			job_technician_drone_add = 1
-		}
-		mult = value:pw_generator_value
+	inline_script = {
+		script = jobs/inline_evolved_technician_swaps
+		machine_count = 0.5
+		mult = value:pw_generators_value
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_technician_drone_add = 0.5
-			job_tec_hydrorelay_drone_add = 0.5
-		}
-		mult = value:pw_generator_value
-	}
-
+	
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -1102,46 +635,6 @@ pw_building_helios_tower = {
 		text = pw_helios_tower_jobs_add_gestalt
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_energy_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_energy_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_technician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_technician_drone_effect_desc
-	}
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = yes }
-		}
-		text = job_tec_hydrorelay_drone_effect_desc
-	}
-
 	on_built = {
 		planet_event = { id = pw_wonder.600 }
 	}
@@ -1170,14 +663,11 @@ pw_building_helios_tower = {
 		}
 		modifier = {
 			factor = 4
-			tec_has_energy_designation = yes
+			has_generator_designation = yes
 		}
 		modifier = {
 			factor = 3
-			OR = {
-				has_designation = col_rural
-				has_designation = col_rural_gestalt
-			}
+			has_rural_designation = yes
 		}
 		modifier = {
 			factor = 3
@@ -1224,8 +714,7 @@ pw_building_helios_translucent_obelisk = {
 			AND = {
 				tec_pw_voidborn_or_arcology_hab = yes
 				OR = {
-					has_planet_flag = energy_habitat
-					has_planet_flag = pd_energy_hab
+					tec_energy_prod_building_exception = yes
 					owner = { is_gestalt = yes }
 				}
 			}
@@ -1235,7 +724,7 @@ pw_building_helios_translucent_obelisk = {
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			tec_is_planet_city = yes
+			tec_is_city_world = yes
 		}
 	}
 
@@ -1250,7 +739,7 @@ pw_building_helios_translucent_obelisk = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_planet_city = yes
+			tec_is_city_world = yes
 		}
 
 		# Empire Unique:
@@ -1259,85 +748,24 @@ pw_building_helios_translucent_obelisk = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_helios_translucent_obelisk }
+					OR = {
+						has_generator_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_energy_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_energy_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_extra / -2 ]
-			food = @\[ pw_building_upkeep_extra / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
 	}
 
 	planet_modifier = {
@@ -1345,106 +773,63 @@ pw_building_helios_translucent_obelisk = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
-	#Energy director
-	triggered_planet_modifier = {
-		potential = {
+	#Mining director
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_energy_director
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_energy_director_add = 2
-		}
+		"
 	}
 
-	#Translucers jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_translucer_add = 3
-		}
-	}
-
-	#Energy coordinator
-	triggered_planet_modifier = {
-		potential = {
+	#Mining coordinator
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_energy_coordinator
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_energy_coordinator_add = 2
-		}
+		"
 	}
 
-	#Translucers Drone
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_translucer_drone_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_technician
+		regular_count = 1
+		hive_count = 1
+		machine_count = 1
+		machine_aquatic_count = 0.5
+		mult = value:pw_generators_value
+		display = with_desc
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_evolved_technician_swaps
+		machine_count = 0.5
+		mult = value:pw_generators_value
+		display = with_desc
+		trigger = ""
 	}
 
-	#Add Regular Technician: 1 for each District 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_technician_add = 1
-		}
-		mult = value:pw_generator_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = no }
-		}
-		modifier = {
-			job_technician_drone_add = 1
-		}
-		mult = value:pw_generator_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_technician_drone_add = 0.5
-			job_tec_hydrorelay_drone_add = 0.5
-		}
-		mult = value:pw_generator_value
+	#Chemist jobs
+	inline_script = {
+		script = jobs/inline_evolved_translucer
+		count = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -1484,62 +869,6 @@ pw_building_helios_translucent_obelisk = {
 		text = pw_helios_tower_jobs_add_gestalt
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_energy_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_energy_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_translucer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_translucer_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_technician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_technician_drone_effect_desc
-	}
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_generator_aqua_district_swap = yes }
-		}
-		text = job_tec_hydrorelay_drone_effect_desc
-	}
-
 	on_built = {
 		#This is an upgrade, so on_building_upgraded triggers for this.
 		#planet_event = { id = pw_wonder.650 }
@@ -1569,14 +898,11 @@ pw_building_helios_translucent_obelisk = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_energy_designation = yes
+			has_generator_designation = yes
 		}
 		modifier = {
 			factor = 3
-			OR = {
-				has_designation = col_rural
-				has_designation = col_rural_gestalt
-			}
+			has_rural_designation = yes
 		}
 		modifier = {
 			factor = 2
@@ -1618,24 +944,16 @@ pw_building_demetrius_fields = {
 	potential = {
 		exists = owner
 		NOT = { has_modifier = resort_colony }
-		NOT = { is_planet_class = pc_machine }
-		OR = {
-			tec_is_habitat = no
-			AND = {
-				tec_pw_voidborn_or_arcology_hab = yes
-				OR = {
-					has_planet_flag = tec_food_habitat
-					has_planet_flag = pd_farming_hab
-				}
-			}
-		}
+		tec_is_machine_world = no
+		tec_is_habitat = no
+		tec_is_city_world = no
 	}
 
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			tec_is_planet_city = no
-			is_planet_class = pc_machine
+			tec_is_city_world = yes
+			tec_is_machine_world = yes
 		}
 	}
 
@@ -1653,7 +971,7 @@ pw_building_demetrius_fields = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_planet_city = no
+			tec_is_city_world = no
 		}
 	}
 
@@ -1663,179 +981,79 @@ pw_building_demetrius_fields = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_demetrius_fields }
+					OR = {
+						has_farming_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_farming_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_farming_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Agriculture Director
-	triggered_planet_modifier = {
-		potential = {
+	#Mining director
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_agriculture_director
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_agriculture_director_add = @pw_building_ruler_jobs
-		}
+		"
 	}
 
-	#Food Coordinator
-	triggered_planet_modifier = {
-		potential = {
+	#Mining coordinator
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_food_coordinator
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_food_coordinator_add = @pw_building_ruler_jobs
-		}
+		"
 	}
 
-	#Add Regular Farmer: 1 for each District
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		modifier = {
-			job_farmer_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_farmer
+		regular_count = 1
+		regular_aquatic_count = 0.5
+		hive_count = 1
+		hive_aquatic_count = 0.5
+		machine_count = 1
 		mult = value:pw_farming_value
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_angler_add = 0.5
-			job_pearl_diver_add = 0.5
-		}
+	inline_script = {
+		script = jobs/inline_evolved_farmer_swaps
+		regular_count = 0.5
+		hive_count = 0.5
 		mult = value:pw_farming_value
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		modifier = {
-			job_agri_drone_add = 1
-		}
-		mult = value:pw_farming_value
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_aqua_drone_add = 0.5
-			job_pearl_diver_add = 0.5
-		}
-		mult = value:pw_farming_value
+		display = with_desc
+		trigger = ""
 	}
 
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -1870,80 +1088,6 @@ pw_building_demetrius_fields = {
 		text = pw_demetrius_fields_jobs_add_gestalt
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_agriculture_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_food_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		text = job_farmer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_regular_empire = yes
-			}
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_aqu_angler_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_regular_empire = yes
-			}
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_pearl_diver_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		text = job_agri_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_tec_aqua_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_tec_depth_drone_effect_desc
-	}
-
 	on_built = {
 		planet_event = { id = pw_wonder.700 }
 	}
@@ -1972,14 +1116,11 @@ pw_building_demetrius_fields = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_farming_designation = yes
+			has_farming_designation = yes
 		}
 		modifier = {
 			factor = 3
-			OR = {
-				has_designation = col_rural
-				has_designation = col_rural_gestalt
-			}
+			has_rural_designation = yes
 		}
 		modifier = {
 			factor = 2
@@ -2021,15 +1162,16 @@ pw_building_demetrius_chemical_garden = {
 	potential = {
 		exists = owner
 		NOT = { has_modifier = resort_colony }
-		NOT = { is_planet_class = pc_machine }
-		NOT = { is_planet_class = pc_habitat }
+		tec_is_machine_world = no
+		tec_is_habitat = no
+		tec_is_city_world = no
 	}
 
 	destroy_trigger = {
 		OR = {
 			has_modifier = resort_colony
-			is_planet_class = pc_city
-			is_planet_class = pc_machine
+			tec_is_city_world = yes
+			tec_is_machine_world = yes
 		}
 	}
 
@@ -2044,7 +1186,8 @@ pw_building_demetrius_chemical_garden = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			is_planet_class = pc_city
+			tec_is_city_world = yes
+			tec_is_machine_world = yes
 		}
 
 		# Empire Unique:
@@ -2053,62 +1196,23 @@ pw_building_demetrius_chemical_garden = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_demetrius_chemical_garden }
+					OR = {
+						has_farming_designation = yes
+					}
 				}
-			}
-			minerals = @pw_building_cost_extra
+			"
 		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_farming_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
-		upkeep = {
-			energy = @pw_building_upkeep
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_farming_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 	}
 
 	planet_modifier = {
@@ -2116,119 +1220,65 @@ pw_building_demetrius_chemical_garden = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
-	#Agriculture Director
-	triggered_planet_modifier = {
-		potential = {
+	#Mining director
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_agriculture_director
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_pw_agriculture_director_add = 2
-		}
+		"
 	}
 
-	#Translucers jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_gas_refiner_add = 3
-		}
-	}
-
-	#Food Coordinator
-	triggered_planet_modifier = {
-		potential = {
+	#Mining coordinator
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_food_coordinator
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_pw_food_coordinator_add = 2
-		}
+		"
 	}
 
-	#Translucers Drone
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_gas_refiner_drone_add = 3
-		}
-	}
-
-	#Add Regular Farmer: 1 for each District
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		modifier = {
-			job_farmer_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_farmer
+		regular_count = 1
+		regular_aquatic_count = 0.5
+		hive_count = 1
+		hive_aquatic_count = 0.5
+		machine_count = 1
 		mult = value:pw_farming_value
+		display = with_desc
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_evolved_farmer_swaps
+		regular_count = 0.5
+		hive_count = 0.5
+		mult = value:pw_farming_value
+		display = with_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_angler_add = 0.5
-			job_pearl_diver_add = 0.5
-		}
-		mult = value:pw_farming_value
+	#Chemist jobs
+	inline_script = {
+		script = jobs/inline_evolved_gas_refiner
+		count = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		modifier = {
-			job_agri_drone_add = 1
-		}
-		mult = value:pw_farming_value
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		modifier = {
-			job_tec_aqua_drone_add = 0.5
-			job_tec_depth_drone_add = 0.5
-		}
-		mult = value:pw_farming_value
-	}
-
+	
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -2237,7 +1287,7 @@ pw_building_demetrius_chemical_garden = {
 			owner = { has_edict = pw_wonders_beyond_ambition }
 		}
 		modifier = {
-			planet_pops_organics_food_upkeep_mult = -0.20
+			planet_pops_food_upkeep_mult = -0.20
 			planet_refiners_produces_mult = 0.05
 		}
 	}
@@ -2266,96 +1316,6 @@ pw_building_demetrius_chemical_garden = {
 			owner = { is_gestalt = yes }
 		}
 		text = pw_demetrius_fields_jobs_add_gestalt
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_agriculture_director_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_food_coordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_gas_refiner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_gas_refiner_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		text = job_farmer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_regular_empire = yes
-			}
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_aqu_angler_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_regular_empire = yes
-			}
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_pearl_diver_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = no }
-		}
-		text = job_agri_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_tec_aqua_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_farming_aqua_district_swap = yes }
-		}
-		text = job_tec_depth_drone_effect_desc
 	}
 
 	on_built = {
@@ -2387,14 +1347,11 @@ pw_building_demetrius_chemical_garden = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_farming_designation = yes
+			has_farming_designation = yes
 		}
 		modifier = {
 			factor = 3
-			OR = {
-				has_designation = col_rural
-				has_designation = col_rural_gestalt
-			}
+			has_rural_designation = yes
 		}
 		modifier = {
 			factor = 2

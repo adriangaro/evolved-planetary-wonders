@@ -1,0 +1,9 @@
+# buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+
+produces = {
+	trigger = {
+		exists = owner
+		owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
+	}
+	unity = @pw_unity_production
+}

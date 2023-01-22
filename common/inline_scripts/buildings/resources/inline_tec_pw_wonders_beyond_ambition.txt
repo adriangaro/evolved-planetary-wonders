@@ -1,0 +1,11 @@
+# buildings/resources/inline_tec_pw_wonders_beyond_ambition
+
+upkeep = {
+	trigger = {
+		exists = owner
+		owner = {
+			has_edict = pw_wonders_beyond_ambition
+		}
+	}
+	energy = @pw_building_upkeep_ambition
+}

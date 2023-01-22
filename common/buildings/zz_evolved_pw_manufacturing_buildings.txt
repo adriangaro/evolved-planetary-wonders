@@ -26,30 +26,17 @@ pw_building_mantle_crucible = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @pw_building_cost
-		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_mantle_crucible }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		upkeep = {
 			trigger = {
 				has_modifier = pw_mod_mantle_crucible_alloys
 			}
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
 		upkeep = {
 			trigger = {
 				has_modifier = pw_mod_mantle_crucible_consumer_goods
 			}
-			energy = @pw_building_upkeep
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
 		upkeep = {
@@ -57,74 +44,13 @@ pw_building_mantle_crucible = {
 				exists = owner
 				owner = { country_uses_consumer_goods = no }
 			}
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = { country_uses_consumer_goods = yes }
-				NOT = { has_modifier = pw_mod_mantle_crucible_alloys }
-				NOT = { has_modifier = pw_mod_mantle_crucible_consumer_goods }
-			}
-			energy = @pw_building_upkeep
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				exists = planet.owner
-				planet.owner = {
-					is_specialist_subject_type = { TYPE = prospectorium }
-				}
-			}
-			energy = -2
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	destroy_trigger = {
@@ -145,14 +71,7 @@ pw_building_mantle_crucible = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Decrease Habitability
 	triggered_planet_modifier = {
@@ -168,638 +87,149 @@ pw_building_mantle_crucible = {
 	}
 
 	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 4
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 4
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 4
-		}
-	}
+	
 
 	#Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 4
+		mult = 1
+		trigger = "
+			owner = { 
 				country_uses_consumer_goods = yes
-				is_crafter_empire = no
-			}
-		}
-		modifier = {
-			job_artisan_add = 4
-		}
-	}
-	#Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-		}
-		modifier = {
-			job_artificer_add = 4
-		}
+			} 
+		"
+		display = with_desc
 	}
 
 	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_miner_add = 2
-		}
-	}
-	#Alloys (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 2
+		mult = 1
+		trigger = "
+			owner = { 
 				country_uses_consumer_goods = no
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 2
-		}
+			} 
+		"
+		display = no_desc
 	}
-	#Catalytic Technician (no CG)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
+	inline_script = {
+		script = jobs/inline_evolved_miner
+		regular_count = 2
+		regular_aquatic_count = 2
+		hive_count = 2
+		hive_aquatic_count = 2
+		machine_count = 2
+		mult = 1
+		trigger = "
+			owner = { 
 				country_uses_consumer_goods = no
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 2
-		}
-	}
-
-	#Hive Mind
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_mining_drone_add = 2
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_alloy_drone_add = 6
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 6
-		}
-	}
-
-	#Machine
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 4
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 4
-		}
-	}
-
-	#Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = yes }
-		}
-		modifier = {
-			job_artisan_drone_add = 4
-		}
-	}
-
-	#Not Rogue Servitor
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = no }
-		}
-		modifier = {
-			job_mining_drone_add = 2
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = no
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 2
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = no
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 2
-		}
+			} 
+		"
+		display = with_desc
 	}
 
 	#Designation Changes -> Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_foundry_add = 1
-		}
-	}
-	#Designation Changes -> Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
-	}
-
-	#Designation Changes -> -Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = -1
+		mult = 1
+		trigger = "
+			owner = { 
 				country_uses_consumer_goods = yes
-				is_crafter_empire = no
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_artisan_add = -1
-		}
+			} 
+			has_foundry_designation = yes
+		"
+		display = no_desc
 	}
-	#Designation Changes -> -Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_artificer_add = -1
-		}
-	}
-
-	#Designation Changes -> -Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_foundry_add = -1
-		}
-	}
-	#Designation Changes -> -Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_catalytic_technician_add = -1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 1
+		mult = 1
+		trigger = "
+			has_foundry_designation = yes
+		"
+		display = no_desc
 	}
 
 	#Designation Changes -> Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = no
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_artisan_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 1
+		mult = 1
+		trigger = "
+			has_factory_designation = yes
+		"
+		display = no_desc
 	}
-	#Designation Changes -> Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_artificer_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = yes }
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_artisan_drone_add = -1
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-				is_catalytic_empire = no
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_fabricator_add = 1
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-				is_catalytic_empire = yes
-			}
-			tec_has_alloy_designation = yes
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = yes }
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_artisan_drone_add = 1
-		}
-	}
-	#-Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-				is_catalytic_empire = no
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_fabricator_add = -1
-		}
-	}
-	#-Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-				is_catalytic_empire = yes
-			}
-			tec_has_cg_designation = yes
-		}
-		modifier = {
-			job_catalytic_drone_add = -1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = -1
+		mult = 1
+		trigger = "
+			has_factory_designation = yes
+		"
+		display = no_desc
 	}
 
 	#Modifier Changes -> Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = -2
+		mult = 1
+		trigger = "
+			owner = { 
+				country_uses_consumer_goods = yes
+			} 
 			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_foundry_add = 2
-		}
-	}
-	#Modifier Changes -> Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_catalytic_technician_add = 2
-		}
+		"
+		display = no_desc
 	}
 
-	#Modifier Changes -> -Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = no
-			}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 2
+		mult = 1
+		trigger = "
 			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_artisan_add = -2
-		}
-	}
-	#Modifier Changes -> -Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				is_crafter_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_artificer_add = -2
-		}
-	}
-
-	#Designation Changes -> -Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_foundry_add = -2
-		}
-	}
-	#Designation Changes -> -Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				
-				is_catalytic_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_catalytic_technician_add = -2
-		}
+		"
+		display = no_desc
 	}
 
 	#Modifier Changes -> Consumer Goods
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 2
+		mult = 1
+		trigger = "
+			owner = { 
 				country_uses_consumer_goods = yes
-				
-				is_crafter_empire = no
-			}
+			} 
 			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_artisan_add = 2
-		}
-	}
-	#Modifier Changes -> Artificer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				
-				is_crafter_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_artificer_add = 2
-		}
+		"
+		display = no_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_artisan_drone_add = 2
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = no
-			}
-			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_fabricator_add = 2
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-				
-				is_catalytic_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_alloys
-		}
-		modifier = {
-			job_catalytic_drone_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = -2
+		mult = 1
+		trigger = "
 			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_artisan_drone_add = 2
-		}
+		"
+		display = no_desc
 	}
-	#-Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = no
-			}
-			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_fabricator_add = -2
-		}
-	}
-	#-Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				
-				is_catalytic_empire = yes
-			}
-			has_modifier = pw_mod_mantle_crucible_consumer_goods
-		}
-		modifier = {
-			job_catalytic_drone_add = -2
-		}
-	}
-
+	
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonuses
 	triggered_planet_modifier = {
@@ -829,137 +259,6 @@ pw_building_mantle_crucible = {
 
 	triggered_desc = {
 		text = pw_planet_wonder_lb
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-		}
-		text = job_foundry_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_technician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				NOR = {
-					has_valid_civic = civic_crafters
-					has_valid_civic = civic_corporate_crafters
-				}
-			}
-		}
-		text = job_artisan_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				country_uses_consumer_goods = yes
-				OR = {
-					has_valid_civic = civic_crafters
-					has_valid_civic = civic_corporate_crafters
-				}
-			}
-		}
-		text = job_artificer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { country_uses_consumer_goods = no }
-		}
-		text = job_miner_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		text = job_alloy_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_mining_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		text = job_fabricator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = yes }
-		}
-		text = job_artisan_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { country_uses_consumer_goods = no }
-		}
-		text = job_mining_drone_effect_desc
 	}
 
 	on_built = {
@@ -1011,9 +310,9 @@ pw_building_mantle_crucible = {
 		modifier = {
 			factor = 5
 			OR = {
-				tec_has_alloy_designation = yes
-				tec_has_cg_designation = yes
-				tec_has_industrial_designation = yes
+				has_foundry_designation = yes
+				has_factory_designation = yes
+				has_industrial_designation = yes
 			}
 		}
 		modifier = {
@@ -1072,86 +371,27 @@ pw_building_titan_forge = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			volatile_motes = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_mantle_crucible }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_alloy_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_foundry_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_alloy_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+		
 	}
 
 	destroy_trigger = {
@@ -1166,14 +406,7 @@ pw_building_titan_forge = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	triggered_planet_modifier = {
 		potential = { #If habitability is not fixed
@@ -1188,159 +421,48 @@ pw_building_titan_forge = {
 	}
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
-	}
 
 	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_foundry_add = 7
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 7
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 7
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
-	#Hive
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_alloy_drone_add = 8
-		}
+	inline_script = {
+		script = jobs/inline_evolved_foundry
+		count = 1
+		mult = 1
+		trigger = "
+			owner = { is_hive_empire = yes }
+		"
+		display = no_desc
 	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 8
-		}
-	}
-
+	
 	#Machine
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = replicator
+		count = 1
+		mult = 1
+		trigger = "
 			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_replicator_add = 1
-		}
-	}
-	#Alloys
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		modifier = {
-			job_fabricator_add = 7
-		}
-	}
-	#Catalytic Technician
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 7
-		}
+		"
+		display = with_desc
 	}
 
 	#Stability bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1362,88 +484,6 @@ pw_building_titan_forge = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = no
-			}
-		}
-		text = job_foundry_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_gestalt = no
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_technician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		text = job_alloy_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = no
-			}
-		}
-		text = job_fabricator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				is_catalytic_empire = yes
-			}
-		}
-		text = job_catalytic_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_replicator_effect_desc
 	}
 
 	on_built = {
@@ -1486,7 +526,7 @@ pw_building_titan_forge = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_alloy_designation = yes
+			has_foundry_designation = yes
 		}
 		modifier = {
 			factor = 2
@@ -1529,96 +569,27 @@ pw_building_industrial_hearth = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_mantle_crucible }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_factory
-						has_designation = col_ecu_factory
-						has_designation = col_mac_factory
-						has_designation = col_habitat_factory
-					}
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
+
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
 					OR = {
-						has_designation = col_factory
-						has_designation = col_ecu_factory
-						has_designation = col_mac_factory
-						has_designation = col_habitat_factory
+						has_factory_designation = yes
 					}
 				}
-			}
-			energy = @pw_building_upkeep_discount
+			"
 		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante	
 	}
 
 	destroy_trigger = {
@@ -1643,14 +614,7 @@ pw_building_industrial_hearth = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	triggered_planet_modifier = {
 		potential = { #If habitability is not fixed
@@ -1664,43 +628,94 @@ pw_building_industrial_hearth = {
 		pop_environment_tolerance = -0.25 #Decrease Habitability
 	}
 
-	triggered_planet_modifier = {
-		potential = {
+	#Administrator
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = merchant
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_gestalt = no }
-		}
-		modifier = {
-			job_merchant_add = 1
-			job_pw_poly_artisan_add = 6
-			job_pw_poly_artisan_per_pop = @pw_job_per_25_pop
-		}
+			owner = { is_regular_empire = yes }
+		"
+		display = with_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
+	# CG
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_poly_artisan
+		count = @pw_job_per_25_pop
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = {
-				is_machine_empire = yes
-				country_uses_consumer_goods = yes
-			}
-		}
-		modifier = {
-			job_replicator_add = 1
-			job_pw_poly_artisan_drone_add = 6
-			job_pw_poly_artisan_drone_per_pop = @pw_job_per_25_pop
-		}
+			owner = { is_regular_empire = yes }
+		"
+		display = per_pop
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_poly_artisan
+		count = 6
+		mult = 1
+		trigger = "
+			exists = owner
+			owner = { is_regular_empire = yes }
+		"
+		display = no_desc
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_poly_artisan_drone
+		count = @pw_job_per_25_pop
+		mult = 1
+		trigger = "
+			exists = owner
+			owner = { is_gestalt = yes }
+		"
+		display = per_pop
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_poly_artisan_drone
+		count = 6
+		mult = 1
+		trigger = "
+			exists = owner
+			owner = { is_gestalt = yes }
+		"
+		display = no_desc
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_poly_artisan_drone
+		count = 1
+		mult = 1
+		trigger = "
+			exists = owner
+			owner = { is_hive_empire = yes }
+		"
+		display = no_desc
+	}
+	
+	#Machine
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = replicator
+		count = 1
+		mult = 1
+		trigger = "
+			owner = { is_machine_empire = yes }
+		"
+		display = with_desc
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1722,38 +737,6 @@ pw_building_industrial_hearth = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_pw_poly_artisan_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_merchant_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_poly_artisan_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_replicator_effect_desc
 	}
 
 	on_built = {
@@ -1789,7 +772,7 @@ pw_building_industrial_hearth = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_cg_designation = yes
+			has_factory_designation = yes
 		}
 		modifier = {
 			factor = 2

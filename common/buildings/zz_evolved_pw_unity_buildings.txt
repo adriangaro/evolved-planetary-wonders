@@ -30,92 +30,17 @@ pw_building_pavilion_of_wonders = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			exotic_gases = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_pavilion_of_wonders }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 	}
 
 	destroy_trigger = {
@@ -143,64 +68,19 @@ pw_building_pavilion_of_wonders = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt!
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
-	}
 
 	#Culture Workers
 	triggered_planet_modifier = {
@@ -213,24 +93,12 @@ pw_building_pavilion_of_wonders = {
 	}
 
 	#Death Chroniclers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_death_chronicler_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = no }
-		}
-		modifier = {
-			job_culture_worker_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_culture_worker
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Tourists
@@ -244,40 +112,16 @@ pw_building_pavilion_of_wonders = {
 	# }
 
 	#Entertainers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		modifier = {
-			job_entertainer_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		modifier = {
-			job_duelist_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_entertainer
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Stability
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -304,89 +148,6 @@ pw_building_pavilion_of_wonders = {
 
 	triggered_desc = {
 		text = pw_planet_wonder_lb
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_culture_worker_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		text = job_death_chronicler_effect_desc
-	}
-
-	# triggered_desc = {
-	# 	trigger = {
-	# 		has_modifier = resort_colony
-	# 	}
-	# 	text = job_pw_tourist_effect_desc
-	# }
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		text = job_entertainer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		text = job_duelist_effect_desc
 	}
 
 	on_built = {
@@ -520,92 +281,18 @@ pw_building_fair_of_worlds = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_fair_of_worlds }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	destroy_trigger = {
@@ -634,64 +321,19 @@ pw_building_fair_of_worlds = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt and must be xenophile!
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
-
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
-	}
+	
 
 	#Culture Workers
 	triggered_planet_modifier = {
@@ -703,27 +345,15 @@ pw_building_fair_of_worlds = {
 		}
 	}
 
+	
 	#Death Chroniclers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_death_chronicler_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_culture_worker
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = no }
-		}
-		modifier = {
-			job_culture_worker_add = 2
-		}
-	}
-
 
 	#Tourists
 	# triggered_planet_modifier = {
@@ -731,207 +361,36 @@ pw_building_fair_of_worlds = {
 	# 		has_modifier = resort_colony
 	# 	}
 	# 	modifier = {
-	# 		job_pw_tourist_per_pop = @pw_job_per_20_pop
+	# 		job_pw_tourist_per_pop = @pw_job_per_25_pop
 	# 	}
 	# }
 
 	#Entertainers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		modifier = {
-			job_entertainer_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_entertainer
+		count = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		modifier = {
-			job_duelist_add = 3
-		}
-	}
 
 	#Curators of Diversity (Envoys, max 5)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = {
-				count_envoy = {
-					count > 0
-					limit = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
 
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_diversity_curator
+		count = 1
+		mult = value:pw_curator_count
+		display = with_desc
+		trigger = "
 			exists = owner
 			owner = { is_xenophile = yes }
-			owner = {
-				count_envoy = {
-					count > 1
-					limit = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = {
-				count_envoy = {
-					count > 2
-					limit = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = {
-				count_envoy = {
-					count > 3
-					limit = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = {
-				count_envoy = {
-					count > 4
-					limit = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	#Curators of Diversity (Federation, max 5)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = { has_federation = yes }
-			owner = {
-				count_federation_ally = { count > 0 }
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = { has_federation = yes }
-			owner = {
-				count_federation_ally = { count > 1 }
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = { has_federation = yes }
-			owner = {
-				count_federation_ally = { count > 2 }
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = { has_federation = yes }
-			owner = {
-				count_federation_ally = { count > 3 }
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = { has_federation = yes }
-			owner = {
-				count_federation_ally = { count > 4 }
-			}
-		}
-		modifier = {
-			job_pw_diversity_curator_add = 1
-		}
+		"
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -968,106 +427,6 @@ pw_building_fair_of_worlds = {
 
 	triggered_desc = {
 		text = pw_building_fair_of_worlds_tooltip
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_culture_worker_effect_desc
-	}
-
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		text = job_death_chronicler_effect_desc
-	}
-
-	# triggered_desc = {
-	# 	trigger = {
-	# 		has_modifier = resort_colony
-	# 	}
-	# 	text = job_pw_tourist_effect_desc
-	# }
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		text = job_entertainer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		text = job_duelist_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_xenophile = yes }
-			owner = {
-				OR = {
-					has_federation = yes
-					any_envoy = {
-						has_envoy_task = { task = improve_relations }
-					}
-				}
-			}
-		}
-		text = job_pw_diversity_curator_effect_desc
 	}
 
 	on_built = {
@@ -1187,92 +546,19 @@ pw_building_museum_of_the_grotesque = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			volatile_motes = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_museum_of_the_grotesque }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					OR = {
-						has_designation = col_resort
-						has_designation = col_habitat_leisure
-					}
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	destroy_trigger = {
@@ -1301,65 +587,20 @@ pw_building_museum_of_the_grotesque = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt and must be xenophobe!
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
-	}
-
+	
 	#Culture Workers
 	triggered_planet_modifier = {
 		potential = {
@@ -1372,24 +613,12 @@ pw_building_museum_of_the_grotesque = {
 
 
 	#Death Chroniclers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_death_chronicler_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {  tec_is_memorialist_empire = no }
-		}
-		modifier = {
-			job_culture_worker_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_culture_worker
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Tourists
@@ -1398,243 +627,36 @@ pw_building_museum_of_the_grotesque = {
 	# 		has_modifier = resort_colony
 	# 	}
 	# 	modifier = {
-	# 		job_pw_tourist_per_pop = @pw_job_per_20_pop
+	# 		job_pw_tourist_per_pop = @pw_job_per_25_pop
 	# 	}
 	# }
 
 	#Entertainers
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		modifier = {
-			job_entertainer_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_entertainer
+		count = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		modifier = {
-			job_duelist_add = 3
-		}
-	}
 
 	#Curators of Degeneracy (Envoys, max 5)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_envoy = {
-					count > 0
-					limit = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
 
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_degeneracy_curator
+		count = 1
+		mult = value:pw_deg_curator_count
+		display = with_desc
+		trigger = "
 			exists = owner
 			owner = { is_xenophobe = yes }
-			owner = {
-				count_envoy = {
-					count > 1
-					limit = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_envoy = {
-					count > 2
-					limit = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_envoy = {
-					count > 3
-					limit = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_envoy = {
-					count > 4
-					limit = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	#Curators of Degeneracy (Federation, max 5 -> max 3 in vanilla)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_rival_country = {
-					count > 0
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_rival_country = {
-					count > 1
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_rival_country = {
-					count > 2
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_rival_country = {
-					count > 3
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				count_rival_country = {
-					count > 4
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 1
-		}
-	}
-
-	#Curators of Degeneracy (war)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				is_at_war = yes
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 2
-		}
-	}
-
-	#Curators of Degeneracy (no diplomacy)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_xenophobe = yes }
-			owner = {
-				OR = {
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_inwards_perfection
-				}
-			}
-		}
-		modifier = {
-			job_pw_degeneracy_curator_add = 3
-		}
+		"
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1693,106 +715,6 @@ pw_building_museum_of_the_grotesque = {
 			}
 		}
 		text = pw_building_museum_of_the_grotesque_tooltip_no_diplomacy
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_culture_worker_effect_desc
-	}
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		text = job_death_chronicler_effect_desc
-	}
-
-	# triggered_desc = {
-	# 	trigger = {
-	# 		has_modifier = resort_colony
-	# 	}
-	# 	text = job_pw_tourist_effect_desc
-	# }
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		text = job_entertainer_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		text = job_duelist_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				OR = {
-					is_at_war = yes
-					has_valid_civic = civic_fanatic_purifiers
-					has_valid_civic = civic_inwards_perfection
-					count_rival_country = { count > 0 }
-					any_envoy = {
-						has_envoy_task = { task = harm_relations }
-					}
-				}
-			}
-		}
-		text = job_pw_degeneracy_curator_effect_desc
 	}
 
 	on_built = {
@@ -1917,70 +839,17 @@ pw_building_holy_reliquary = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_holy_reliquary }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante		
 	}
 
 	destroy_trigger = {
@@ -2008,214 +877,97 @@ pw_building_holy_reliquary = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt and must be spiritualist!
 
 	#Relic Keeper
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_relic_keeper
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_spiritualist = yes }
 			owner = {
 				has_country_flag = pw_holy_reliquary_relic_keeper_appointed
 			}
-		}
-		modifier = {
-			job_pw_relic_keeper_add = 1
-		}
+		"
+		display = with_desc
 	}
+
 
 	#Priests
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = high_priest
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { tec_is_aiauth_empire = no }
 			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_high_priest_add = 1
-			job_priest_add = 8
-		}
+		"
+		display = with_desc
 	}
 
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-			job_tec_ai_ordinator_add = 8
-		}
+	inline_script = {
+		script = jobs/inline_evolved_priest_split
+		count = 8
+		count_half = 3
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Death priests
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = mortal_initiate
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = "
 			exists = owner
-			owner = { tec_is_death_cult = yes }
-		}
-		modifier = {
-			job_death_priest_add = 2
-			job_mortal_initiate_add = 2
-		}
+			owner = {
+				tec_is_death_cult = yes
+			}
+		"
 	}
 	
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { tec_is_death_cult = yes }
-		}
-		modifier = {
-			job_priest_add = -2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { tec_is_death_cult = yes }
-		}
-		modifier = {
-			job_tec_ai_ordinator_add = -2
-		}
-	}
-
 	#Death Chroniclers
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = death_chronicler
+		count = 2 
+		mult = 1
+		display = with_desc
+		trigger = "
 			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_death_chronicler_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_priest_add = -2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_tec_ai_ordinator_add = -2
-		}
-	}
-
-	# Machine cult
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_machine_cult = yes }
-		}
-		modifier = {
-			job_tec_mecha_priest_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { tec_is_machine_cult = yes }
-		}
-		modifier = {
-			job_priest_add = -2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { tec_is_machine_cult = yes }
-		}
-		modifier = {
-			job_tec_ai_ordinator_add = -2
-		}
-	}
-
-	# Machine cult
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_ocult_cult = yes }
-		}
-		modifier = {
-			job_tec_minor_occultist_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { tec_is_ocult_cult = yes }
-		}
-		modifier = {
-			job_priest_add = -2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { tec_is_ocult_cult = yes }
-		}
-		modifier = {
-			job_tec_ai_ordinator_add = -2
-		}
+			owner = {
+				tec_is_memorialist_empire = yes
+			}
+		"
 	}
 
 	#Prosperity preacher
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = preacher
+		count = 2 
+		mult = 1
+		display = with_desc
+		trigger = "
 			exists = planet.branch_office_owner
 			has_holding = {
 				holding = building_temple_of_prosperity
 				owner = planet.branch_office_owner
 			}
-		}
-		modifier = {
-			job_preacher_add = 2
-		}
+		"
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -2238,104 +990,6 @@ pw_building_holy_reliquary = {
 
 	triggered_desc = {
 		text = pw_building_holy_reliquary_tooltip
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { has_country_flag = pw_holy_reliquary_relic_keeper_appointed }
-		}
-		text = job_pw_relic_keeper_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_spiritualist = yes }
-			owner = { tec_is_aiauth_empire = no }
-		}
-		text = job_high_priest_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_spiritualist = yes }
-			owner = { tec_is_aiauth_empire = no }
-		}
-		text = job_priest_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_spiritualist = yes }
-			owner = { tec_is_aiauth_empire = yes }
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_spiritualist = yes }
-			owner = { tec_is_aiauth_empire = yes }
-		}
-		text = job_tec_ai_ordinator_effect_desc
-	}
-
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_death_cult = yes }
-		}
-		text = job_death_priest_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_death_cult = yes }
-		}
-		text = job_mortal_initiate_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		text = job_death_chronicler_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			
-			owner = { tec_is_machine_cult = yes }
-		}
-		text = job_tec_mecha_priest_effect_desc
-	}
-	
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			
-			owner = { tec_is_occult_cult = yes }
-		}
-		text = job_tec_minor_occultist_effect_desc
-	}
-	triggered_desc = {
-		trigger = {
-			exists = planet.branch_office_owner
-			has_holding = {
-				holding = building_temple_of_prosperity
-				owner = planet.branch_office_owner
-			}
-		}
-		text = job_preacher_effect_desc
 	}
 
 	on_built = {
@@ -2420,8 +1074,8 @@ pw_building_unhallowed_necropolis = {
 
 	allow = {
 		OR = {
-			is_planet_class = pc_nuked
-			is_planet_class = pc_relic
+			tec_is_nuked_world = yes
+			tec_is_relic_world = yes
 			owner = {
 				#Has any of the civics:
 				OR = {
@@ -2443,84 +1097,33 @@ pw_building_unhallowed_necropolis = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_unhallowed_necropolis }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_designation = col_pw_mausoleum_world
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					has_designation = col_pw_mausoleum_world
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
 	}
 
 	destroy_trigger = {
 		NOR = {
-			is_planet_class = pc_nuked
-			is_planet_class = pc_relic
+			tec_is_nuked_world = yes
+			tec_is_relic_world = yes
 			owner = {
 				OR = {
 					#does not has any of the civics:
@@ -2542,262 +1145,139 @@ pw_building_unhallowed_necropolis = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular Jobs (total: 7/5)
 	#High Priest/Administrator/CEO
-	triggered_planet_modifier = {
-		potential = {
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = high_priest
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = no }
 			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_high_priest_add = 1
-		}
+		"
+		display = with_desc
 	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { is_spiritualist = no }
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
-	}
-
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_spiritualist = no }
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
+		"
+		display = with_desc
 	}
 
 	#Tomb scholars (2)
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_tomb_scholar
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = no }
 			OR = {
-				is_planet_class = pc_nuked
-				is_planet_class = pc_relic
+				tec_is_nuked_world = yes
+				tec_is_relic_world = yes
 			}
-		}
-		modifier = {
-			job_pw_tomb_scholar_add = 2
-		}
+		"
+		display = with_desc
 	}
 
 	#Death Chroniclers/Culture workers (2)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_death_chronicler_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_memorialist_empire = no }
-		}
-		modifier = {
-			job_culture_worker_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_culture_worker
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 
 	#Death Priests/Priests/Culture workers (2)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_death_cult = yes }
-		}
-		modifier = {
-			job_death_priest_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_priest
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = "
 			exists = owner
 			owner = { is_spiritualist = yes }
-			owner = { tec_is_death_cult = no }
-		}
-		modifier = {
-			job_priest_add = 2
-		}
+		"
 	}
 
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_culture_worker
+		count = 2
+		mult = 1
+		display = no_desc
+		trigger = "	
 			exists = owner
-			owner = { is_gestalt = no }
 			owner = { is_spiritualist = no }
-			owner = { tec_is_death_cult = no }
-		}
-		modifier = {
-			job_culture_worker_add = 2
-		}
+		"
 	}
+
 
 	#Gestalt Jobs (total: 7/5)
 	#Tomb surveyors (2)
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_tomb_surveyor
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_gestalt = yes }
 			OR = {
-				is_planet_class = pc_nuked
-				is_planet_class = pc_relic
+				tec_is_nuked_world = yes
+				tec_is_relic_world = yes
 			}
-		}
-		modifier = {
-			job_pw_tomb_surveyor_add = 2
-		}
+		"
+		display = with_desc
 	}
 
 	#Hunter-Seeker (1)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		modifier = {
-			job_patrol_drone_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_patrol_drone
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Chronicle/Evaluator/Synapse (2)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		modifier = {
-			job_chronicle_drone_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_evaluator
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_is_memorialist_empire = no }
-		}
-		modifier = {
-			job_evaluator_add = 2
-		}
-	}
+	
 
 	#Evaluator/Synapse (2)
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = yes
-			}
-		}
-		modifier = {
-			job_synapse_drone_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_synapse
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_cybernetic_hive = yes
-			}
-		}
-		modifier = {
-			job_tec_network_drone_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-		}
-		modifier = {
-			job_tec_resonance_drone_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_evaluator_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_coordinator
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -2812,192 +1292,6 @@ pw_building_unhallowed_necropolis = {
 
 	triggered_desc = {
 		text = pw_planet_wonder_lb
-	}
-
-	#High Priest
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_spiritualist = yes }
-		}
-		text = job_high_priest_effect_desc
-	}
-
-	#Administrator
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-			owner = { is_spiritualist = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-			owner = { is_spiritualist = no }
-		}
-		text = job_executive_effect_desc
-	}
-
-	#Tomb Scholar
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			OR = {
-				is_planet_class = pc_nuked
-				is_planet_class = pc_relic
-			}
-		}
-		text = job_pw_tomb_scholar_effect_desc
-	}
-
-	#Tomb surveyor
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			OR = {
-				is_planet_class = pc_nuked
-				is_planet_class = pc_relic
-			}
-		}
-		text = job_pw_tomb_surveyor_effect_desc
-	}
-
-	#Death Chronicler
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_memorialist_empire = yes }
-		}
-		text = job_death_chronicler_effect_desc
-	}
-
-	#Death Priests
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { tec_is_death_cult = yes }
-		}
-		text = job_death_priest_effect_desc
-	}
-
-	#Priest
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { is_spiritualist = yes }
-			owner = { tec_is_death_cult = yes }
-		}
-		text = job_priest_effect_desc
-	}
-
-	#Culture Worker
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-			owner = { is_spiritualist = no }
-			owner = { tec_is_memorialist_empire = no }
-			owner = { tec_is_death_cult = bo }
-		}
-		text = job_culture_worker_effect_desc
-	}
-
-	#Hunter-Seeker drone
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_patrol_drone_effect_desc
-	}
-
-	#Chronicle Drone
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_is_memorialist_empire = yes  }
-		}
-		text = job_chronicle_drone_effect_desc
-	}
-
-	#Evaluator
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-			owner = { tec_is_memorialist_empire = no  }
-		}
-		text = job_evaluator_effect_desc
-	}
-
-	#Synapse
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes  
-				tec_is_biohive = yes
-			}
-		}
-		text = job_synapse_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes 
-				tec_is_cybernetic_hive = yes
-			}
-		}
-		text = job_tec_network_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes 
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-		}
-		text = job_tec_resonance_drone_effect_desc
 	}
 
 	on_built = {
@@ -3048,8 +1342,8 @@ pw_building_unhallowed_necropolis = {
 		modifier = {
 			factor = 5
 			OR = {
-				is_planet_class = pc_nuked
-				is_planet_class = pc_relic
+				tec_is_nuked_world = yes
+				tec_is_relic_world = yes
 			}
 		}
 		modifier = {

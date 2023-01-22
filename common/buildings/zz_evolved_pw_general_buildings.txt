@@ -34,79 +34,54 @@ pw_building_polyhedron = {
 		planet_max_buildings_add = 1
 	}
 
-	#Regular Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		modifier = {
-			job_researcher_add = 1
-			job_culture_worker_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 1
-			job_evaluator_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_bureaucrat
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = "
+			owner = {
+				is_spiritualist = no
+				has_make_spiritualist_perk = no
+			}
+		"
+	}
+	inline_script = {
+		script = jobs/inline_evolved_priest
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = "	
+			owner = {
+				OR = {
+					is_spiritualist = yes
+					has_make_spiritualist_perk = yes
+				}
+			}
+		"
 	}
 
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 1
-			job_evaluator_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_synapse
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = no }
-		}
-		text = job_culture_worker_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_evaluator_effect_desc
+	inline_script = {
+		script = jobs/inline_evolved_coordinator
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 }

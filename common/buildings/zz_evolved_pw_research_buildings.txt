@@ -48,250 +48,87 @@ pw_building_particle_supercollider = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_particle_supercollider }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		upkeep = {
-			trigger = {
-				exists = planet.owner
-				planet.owner = {
-					is_specialist_subject_type = { TYPE = scholarium }
-				}
-			}
-			energy = -2
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 1
-			job_researcher_add = 4
-			job_pw_researcher_particle_supercollider_add = 4
-		}
+		"
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	
 	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_researcher_particle_supercollider_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_particle_supercollider_experiment_completed_1 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_researcher_particle_supercollider_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_particle_supercollider_experiment_completed_2 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_researcher_particle_supercollider_add = 1
-		}
-	}
-
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_particle_supercollider_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_brain_drone_particle_supercollider_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_brain_drone_particle_supercollider_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_brain_drone_particle_supercollider_add = 1
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_particle_supercollider_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_calculator_particle_supercollider_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_calculator_particle_supercollider_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_particle_supercollider_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_calculator_particle_supercollider_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_particle_supercollider_experiment_completed_3 }"
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -310,65 +147,6 @@ pw_building_particle_supercollider = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_particle_supercollider_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_particle_supercollider_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_particle_supercollider_effect_desc
 	}
 
 	on_built = {
@@ -427,7 +205,7 @@ pw_building_particle_supercollider = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.5
@@ -501,96 +279,29 @@ pw_building_interdimensional_collider = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			sr_dark_matter = @pw_building_cost_rare_half
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_interdimensional_collider }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			rare_crystals = @pw_building_upkeep_rare_1
 			sr_dark_matter = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		upkeep = {
-			trigger = {
-				exists = planet.owner
-				planet.owner = {
-					is_specialist_subject_type = { TYPE = scholarium }
-				}
-			}
-			energy = -2
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	planet_modifier = {
@@ -598,62 +309,45 @@ pw_building_interdimensional_collider = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 2
-			job_researcher_add = 4
-			job_pw_researcher_particle_supercollider_add = 8
-		}
+		"
+	}
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = with_desc
+		count = 8
+		mult = 1
+		trigger = ""
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_particle_supercollider_add = 10
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_particle_supercollider_add = 10
-		}
+	inline_script = {
+		script = jobs/inline_tec_pw_particle_supercollider
+		display = no_desc
+		count = 2
+		mult = 1
+		trigger = "owner = { is_gestalt = yes } "
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -672,65 +366,6 @@ pw_building_interdimensional_collider = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_particle_supercollider_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_particle_supercollider_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_particle_supercollider_effect_desc
 	}
 
 	on_built = {
@@ -790,7 +425,7 @@ pw_building_interdimensional_collider = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -872,244 +507,109 @@ pw_building_domed_city = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			exotic_gases = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_domed_city }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 1
-			job_researcher_add = 4
-			job_pw_researcher_domed_city_add = 4
-			job_pw_domed_city_test_subject_add = 1
-		}
+		"
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	
 	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_1 }"
+	}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_2 }"
+	}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_3 }"
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_test_subject
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
+		"
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_subject_drone
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_domed_city_add = 4
-			job_pw_domed_city_subject_drone_add = 1
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_domed_city_add = 4
-			job_pw_domed_city_subject_drone_add = 1
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
+			owner = { is_gestalt = yes }
+		"
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1128,81 +628,6 @@ pw_building_domed_city = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_domed_city_test_subject_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_domed_city_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_domed_city_subject_drone_effect_desc
 	}
 
 	on_built = {
@@ -1261,7 +686,7 @@ pw_building_domed_city = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -1332,243 +757,111 @@ pw_building_secluded_sector = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			exotic_gases = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_secluded_sector }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 1
-			job_researcher_add = 4
-			job_pw_researcher_domed_city_add = 4
-			job_pw_domed_city_test_subject_add = 1
-		}
+		"
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	
 	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_1 }"
+	}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_2 }"
+	}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_domed_city_experiment_completed_3 }"
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_test_subject
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_researcher_domed_city_add = 1
-		}
+		"
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_subject_drone
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_domed_city_add = 4
-			job_pw_domed_city_subject_drone_add = 1
-		}
+			owner = { is_gestalt = yes }
+		"
 	}
 
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_brain_drone_domed_city_add = 1
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_domed_city_add = 4
-			job_pw_domed_city_subject_drone_add = 1
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_domed_city_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_calculator_domed_city_add = 1
-		}
-	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1587,81 +880,6 @@ pw_building_secluded_sector = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_domed_city_test_subject_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_domed_city_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_domed_city_subject_drone_effect_desc
 	}
 
 	on_built = {
@@ -1720,7 +938,7 @@ pw_building_secluded_sector = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -1793,86 +1011,30 @@ pw_building_psionic_observatory = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			sr_zro = @pw_building_cost_rare_half
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_psionic_observatory }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
+
 		upkeep = {
-			energy = @pw_building_upkeep
 			exotic_gases = @pw_building_upkeep_rare_1
 			sr_zro = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+		
 	}
 
 	planet_modifier = {
@@ -1880,65 +1042,69 @@ pw_building_psionic_observatory = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 2
-			job_researcher_add = 4
-			job_pw_researcher_domed_city_add = 8
-			job_pw_domed_city_test_subject_add = 1
-		}
+		"
+	}
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = with_desc
+		count = 8
+		mult = 1
+		trigger = ""
+	}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_domed_city
+		display = no_desc
+		count = 8
+		mult = 1
+		trigger = "owner = { is_gestalt = yes }"
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_test_subject
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_domed_city_add = 10
-			job_pw_domed_city_subject_drone_add = 1
-		}
+			owner = { is_regular_empire = yes }
+		"
 	}
 
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_domed_city_subject_drone
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_domed_city_add = 10
-			job_pw_domed_city_subject_drone_add = 1
-		}
+			owner = { is_gestalt = yes }
+		"
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -1959,80 +1125,6 @@ pw_building_psionic_observatory = {
 		text = pw_empire_unique_lb
 	}
 
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_domed_city_test_subject_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_domed_city_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_domed_city_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_gestalt = yes }
-		}
-		text = job_pw_domed_city_subject_drone_effect_desc
-	}
 
 	on_built = {
 		#This is an upgrade, so on_building_upgraded triggers for this.
@@ -2091,7 +1183,7 @@ pw_building_psionic_observatory = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -2172,240 +1264,87 @@ pw_building_abyssal_crater_test_site = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			volatile_motes = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_abyssal_crater_test_site }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
+	
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 1
-			job_researcher_add = 4
-			job_pw_researcher_abyssal_crater_test_site_add = 4
-		}
+		"
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	
 	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
-	}
-
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_abyssal_crater_test_site_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_abyssal_crater_test_site_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }"
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -2424,65 +1363,6 @@ pw_building_abyssal_crater_test_site = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_abyssal_crater_test_site_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_abyssal_crater_test_site_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_abyssal_crater_test_site_effect_desc
 	}
 
 	on_built = {
@@ -2541,7 +1421,7 @@ pw_building_abyssal_crater_test_site = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -2612,242 +1492,88 @@ pw_building_abyssal_crater_test_site_habitat = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			volatile_motes = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_abyssal_crater_test_site_habitat }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 1
-			job_researcher_add = 4
-			job_pw_researcher_abyssal_crater_test_site_add = 4
-		}
+		"
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	
 	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_researcher_abyssal_crater_test_site_add = 1
-		}
+	
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }"
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_abyssal_crater_test_site_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_brain_drone_abyssal_crater_test_site_add = 1
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_abyssal_crater_test_site_add = 4
-		}
-	}
-
-	#Additional Jobs from experiments
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_1 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_2 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
-	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-			owner = { has_country_flag = pw_abyssal_crater_test_site_experiment_completed_3 }
-		}
-		modifier = {
-			job_pw_calculator_abyssal_crater_test_site_add = 1
-		}
-	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -2866,65 +1592,6 @@ pw_building_abyssal_crater_test_site_habitat = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_abyssal_crater_test_site_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_abyssal_crater_test_site_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_abyssal_crater_test_site_effect_desc
 	}
 
 	on_built = {
@@ -2983,7 +1650,7 @@ pw_building_abyssal_crater_test_site_habitat = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -3056,87 +1723,29 @@ pw_building_metal_vivarium = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost_upgrade
 			sr_living_metal = @pw_building_cost_rare_half
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_metal_vivarium }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			minerals = @pw_building_cost_discount
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 			sr_living_metal = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_research_designation = yes
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					tec_has_research_designation = yes
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	planet_modifier = {
@@ -3144,62 +1753,45 @@ pw_building_metal_vivarium = {
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Regular jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = head_researcher
+		display = with_desc
+		count = 2
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_regular_empire = yes }
-		}
-		modifier = {
-			job_head_researcher_add = 2
-			job_researcher_add = 4
-			job_pw_researcher_abyssal_crater_test_site_add = 8
-		}
+		"
+	}
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 4
+		mult = 1
+		trigger = ""
+	}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = with_desc
+		count = 8
+		mult = 1
+		trigger = ""
 	}
 
-	#Hive Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		modifier = {
-			job_brain_drone_add = 4
-			job_pw_brain_drone_abyssal_crater_test_site_add = 10
-		}
-	}
-
-	#Machine Jobs
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		modifier = {
-			job_calculator_add = 4
-			job_pw_calculator_abyssal_crater_test_site_add = 10
-		}
+	inline_script = {
+		script = jobs/inline_tec_pw_abyssal_crater_test_site
+		display = no_desc
+		count = 2
+		mult = 1
+		trigger = "owner = { is_gestalt = yes } "
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -3218,65 +1810,6 @@ pw_building_metal_vivarium = {
 
 	triggered_desc = {
 		text = pw_empire_unique_lb
-	}
-
-	#Regular Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_head_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_researcher_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-		}
-		text = job_pw_researcher_abyssal_crater_test_site_effect_desc
-	}
-
-	#Hive Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_pw_brain_drone_abyssal_crater_test_site_effect_desc
-	}
-
-	#Machine Jobs
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_calculator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_pw_calculator_abyssal_crater_test_site_effect_desc
 	}
 
 	on_built = {
@@ -3336,7 +1869,7 @@ pw_building_metal_vivarium = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = 1.25
@@ -3404,70 +1937,18 @@ pw_building_grand_archive = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			exotic_gases = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_grand_archive }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+
 	}
 
 	destroy_trigger = {
@@ -3495,58 +1976,50 @@ pw_building_grand_archive = {
 	}
 
 	#Grand-Archivist
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_grand_archivist
+		display = with_desc
+		count = 6
+		mult = 1
+		trigger = "
+			exists = owner
 			owner = { is_materialist = yes }
-		}
-		modifier = {
-			job_pw_grand_archivist_add = 6
-		}
+		"
 	}
-
-	triggered_planet_modifier = {
-		potential = {
+	
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		display = with_desc
+		count = 6
+		mult = 1
+		trigger = "
+			exists = owner
 			owner = { is_materialist = no }
-		}
-		modifier = {
-			job_researcher_add = 6
-		}
+		"
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Master Archivist
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = pw_grand_archivist
+		display = no_desc
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = {
 				is_materialist = yes
 				has_country_flag = pw_grand_archive_holoarchive_master_archivist_appointed
 			}
-		}
-		modifier = {
-			job_pw_master_archivist_add = 1
-		}
+		"
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Ambition Bonus
 	triggered_planet_modifier = {
@@ -3569,18 +2042,6 @@ pw_building_grand_archive = {
 
 	triggered_desc = {
 		text = pw_building_grand_archive_tooltip
-	}
-
-	triggered_desc = {
-		text = job_pw_grand_archivist_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { has_country_flag = pw_grand_archive_holoarchive_master_archivist_appointed }
-		}
-		text = job_pw_master_archivist_effect_desc
 	}
 
 	on_built = {
@@ -3640,7 +2101,7 @@ pw_building_grand_archive = {
 		}
 		modifier = {
 			factor = 5
-			tec_has_research_designation = yes
+			has_research_designation = yes
 		}
 		modifier = {
 			factor = value:pw_pop_factor

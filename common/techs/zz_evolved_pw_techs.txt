@@ -2083,8 +2083,8 @@ pw_tech_worldly_mausoleums = {
 			#Has a tomb world:
 			any_owned_planet = {
 				OR = {
-					is_planet_class = pc_nuked
-					is_planet_class = pc_relic
+					tec_is_nuked_world = yes
+					tec_is_relic_world = yes
 				}
 			}
 		}
@@ -2174,8 +2174,8 @@ pw_tech_worldly_mausoleums = {
 				count > 1
 				limit = {
 					OR = {
-						is_planet_class = pc_nuked
-						is_planet_class = pc_relic
+						tec_is_nuked_world = yes
+						tec_is_relic_world = yes
 					}
 				}
 			}
@@ -2187,8 +2187,8 @@ pw_tech_worldly_mausoleums = {
 				count > 2
 				limit = {
 					OR = {
-						is_planet_class = pc_nuked
-						is_planet_class = pc_relic
+						tec_is_nuked_world = yes
+						tec_is_relic_world = yes
 					}
 				}
 			}
@@ -2200,8 +2200,8 @@ pw_tech_worldly_mausoleums = {
 				count > 3
 				limit = {
 					OR = {
-						is_planet_class = pc_nuked
-						is_planet_class = pc_relic
+						tec_is_nuked_world = yes
+						tec_is_relic_world = yes
 					}
 				}
 			}
@@ -2238,8 +2238,8 @@ pw_tech_cyberecology = {
 			#Has a gaia or hive world:
 			any_owned_planet = {
 				OR = {
-					tec_is_viable_lifegood_planet = yes
-					is_planet_class = pc_hive
+					tec_is_perfect_planet = yes
+					tec_is_hive_world = yes
 				}
 			}
 		}
@@ -2316,7 +2316,7 @@ pw_tech_cyberecology = {
 				limit = {
 					OR = {
 						is_planet_class = pc_gaia
-						is_planet_class = pc_hive
+						tec_is_hive_world = yes
 					}
 				}
 			}
@@ -2329,7 +2329,7 @@ pw_tech_cyberecology = {
 				limit = {
 					OR = {
 						is_planet_class = pc_gaia
-						is_planet_class = pc_hive
+						tec_is_hive_world = yes
 					}
 				}
 			}
@@ -2342,7 +2342,7 @@ pw_tech_cyberecology = {
 				limit = {
 					OR = {
 						is_planet_class = pc_gaia
-						is_planet_class = pc_hive
+						tec_is_hive_world = yes
 					}
 				}
 			}

@@ -61,17 +61,12 @@ pw_building_bloodsports_arena = {
 		}
 	}
 
-	country_modifier = {
-		country_naval_cap_add = 20
-	}
-
 	triggered_country_modifier = {
 		potential = {
-			root = {
-				tec_has_fully_upgraded_branch_capital = yes
-			}
+			always = yes
 		}
-		country_naval_cap_add = 10
+		country_naval_cap_add = 16
+		mult = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 	}
 
 	planet_modifier = {
@@ -83,11 +78,8 @@ pw_building_bloodsports_arena = {
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -225,19 +217,15 @@ pw_building_meditation_garden = {
 			energy = @pw_building_branch_office_upkeep
 		}
 	}
-
-	country_modifier = {
-		country_admin_cap_add = 10
-	}
-
+	
 	triggered_country_modifier = {
 		potential = {
-			root = {
-				tec_has_fully_upgraded_branch_capital = yes
-			}
+			always = yes
 		}
-		country_admin_cap_add = 5
+		country_admin_cap_add = 10
+		mult = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 	}
+
 
 	planet_modifier = {
 		branch_office_value_mult = 0.15
@@ -248,11 +236,8 @@ pw_building_meditation_garden = {
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -261,51 +246,31 @@ pw_building_meditation_garden = {
 	}
 
 	#Bureaucrat
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_bureaucrat_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_bureaucrat
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
+			owner = {
+				is_spiritualist = no
+				has_make_spiritualist_perk = no
+			}
+		"
 	}
-
-	# Operator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_operator_add = 1
-		}
-	}
-
-	#Priest (spiritualist)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_priest_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_ordinator_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_priest
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "	
+			owner = {
+				OR = {
+					is_spiritualist = yes
+					has_make_spiritualist_perk = yes
+				}
+			}
+		"
 	}
 
 	triggered_planet_modifier = {
@@ -408,20 +373,10 @@ pw_building_innovation_hub = {
 			influence = 25
 		}
 		produces = {
-			society_research = 12
-			physics_research = 12
-			engineering_research = 12
-		}
-
-		produces = {
-			trigger = {
-				root = {
-					tec_has_fully_upgraded_branch_capital = yes
-				}
-			}
-			society_research = 6
-			physics_research = 6
-			engineering_research = 6
+			physics_research = 10
+			engineering_research = 10
+			society_research = 10
+			multiplier = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 		}
 		upkeep = {
 			energy = @pw_building_branch_office_upkeep
@@ -437,11 +392,8 @@ pw_building_innovation_hub = {
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -550,15 +502,8 @@ pw_building_salvation_shrine = {
 			influence = 25
 		}
 		produces = {
-			unity = 15
-		}
-		produces = {
-			trigger = {
-				root = {
-					tec_has_fully_upgraded_branch_capital = yes
-				}
-			}
-			unity = 9
+			unity = 12
+			multiplier = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 		}
 		upkeep = {
 			energy = @pw_building_branch_office_upkeep
@@ -574,11 +519,8 @@ pw_building_salvation_shrine = {
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -600,27 +542,19 @@ pw_building_salvation_shrine = {
 
 	
 	#Priest (spiritualist)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { has_ethic = ethic_fanatic_spiritualist }
-		}
-		modifier = {
-			job_priest_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { has_ethic = ethic_fanatic_spiritualist }
-		}
-		modifier = {
-			job_tec_ai_operator_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_priest
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "	
+			owner = {
+				OR = {
+					is_spiritualist = yes
+					has_make_spiritualist_perk = yes
+				}
+			}
+		"
 	}
 
 	triggered_planet_modifier = {
@@ -715,17 +649,12 @@ pw_building_exotic_beauty_center = {
 		}
 	}
 
-	country_modifier = {
-		diplo_weight_economy_mult = 0.05
-	}
-
 	triggered_country_modifier = {
 		potential = {
-			root = {
-				tec_has_fully_upgraded_branch_capital = yes
-			}
+			always = yes
 		}
-		diplo_weight_economy_mult = 0.025
+		diplo_weight_economy_mult = 0.04
+		mult = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 	}
 
 	planet_modifier = {
@@ -733,16 +662,21 @@ pw_building_exotic_beauty_center = {
 		pop_ethic_xenophile_attraction_mult = 0.20
 		job_tec_consular_add = 1
 		job_tec_hired_entertainer_add = 1
-		job_clerk_add = 1
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
+	}
+
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -854,34 +788,34 @@ pw_building_national_pride_gallery = {
 		}
 	}
 
-	country_modifier = {
-		country_base_influence_produces_add = 0.5
-	}
-
 	triggered_country_modifier = {
 		potential = {
-			root = {
-				tec_has_fully_upgraded_branch_capital = yes
-			}
+			always = yes
 		}
-		country_base_influence_produces_add = 0.25
+		country_base_influence_produces_add = 0.04
+		mult = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 	}
+
 
 	planet_modifier = {
 		branch_office_value_mult = 0.15
 		pop_ethic_xenophobe_attraction_mult = 0.20
 		job_tec_consular_add = 1
-		job_clerk_add = 1
 		job_tec_hired_entertainer_add = 1
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -990,15 +924,8 @@ pw_building_aristocracy_tower = {
 			influence = 25
 		}
 		produces = {
-			energy = 15
-		}
-		produces = {
-			trigger = {
-				root = {
-					tec_has_fully_upgraded_branch_capital = yes
-				}
-			}
-			energy = 9
+			energy = 12
+			multiplier = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 		}
 		upkeep = {
 			energy = @pw_building_branch_office_upkeep
@@ -1014,11 +941,8 @@ pw_building_aristocracy_tower = {
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -1026,19 +950,19 @@ pw_building_aristocracy_tower = {
 		}
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
 				OR = {
 					has_ethic = ethic_fanatic_elitist
 					has_ethic = ethic_fanatic_authoritarian
 				}
 			}
-		}
-		modifier = {
-			job_clerk_add = 1
-		}
+		"
 	}
 
 	triggered_planet_modifier = {
@@ -1129,18 +1053,9 @@ pw_building_factory_city = {
 			influence = 25
 		}
 		produces = {
-			consumer_goods = 8
-			alloys = 6
-		}
-
-		produces = {
-			trigger = {
-				root = {
-					tec_has_fully_upgraded_branch_capital = yes
-				}
-			}
+			consumer_goods = 6
 			consumer_goods = 4
-			alloys = 3
+			multiplier = value:scripted_modifier_mult|MODIFIER|tec_branch_building_base_production_mult|
 		}
 		upkeep = {
 			energy = @pw_building_branch_office_upkeep
@@ -1151,16 +1066,20 @@ pw_building_factory_city = {
 		branch_office_value_mult = 0.15
 		pop_ethic_egalitarian_attraction_mult = 0.20
 		job_tec_consular_add = 1
-		job_clerk_add = 1
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = ""
 	}
 
 	triggered_planet_modifier = {
 		potential = {
-			exists = owner
-			owner = {
-				exists = branch_office_owner
-				branch_office_owner = { is_criminal_syndicate = yes }
-			}
+			exists = branch_office_owner
+			branch_office_owner = { is_criminal_syndicate = yes }
 		}
 		modifier = {
 			job_tec_consular_add = -1
@@ -1168,63 +1087,38 @@ pw_building_factory_city = {
 		}
 	}
 
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_hired_artisan
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
-				is_gestalt = no
-				is_crafter_empire = no
-			}
-		}
-		modifier = {
-			tec_hired_artisan = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_gestalt = no
 				is_crafter_empire = yes
 			}
-		}
-		modifier = {
-			job_artificer_add = 1
-		}
+		"
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_artisan
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
-				is_catalytic_empire = no
-				OR = {
-					has_ethic = ethic_pluralist
-					has_ethic = ethic_fanatic_egalitarian
-				}
+				is_crafter_empire = no
 			}
-		}
-		modifier = {
-			tec_hired_foundry = 1
-		}
+		"
 	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_catalytic_empire = yes
-				OR = {
-					has_ethic = ethic_pluralist
-					has_ethic = ethic_fanatic_egalitarian
-				}
-			}
-		}
-		modifier = {
-			job_catalytic_technician_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_hired_foundry
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
+			owner = { tec_pw_is_pluralist_or_socialism = yes }
+		"
 	}
 
 	triggered_planet_modifier = {

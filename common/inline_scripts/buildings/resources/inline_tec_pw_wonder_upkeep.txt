@@ -1,0 +1,28 @@
+# buildings/resources/inline_tec_pw_wonder_upkeep
+
+
+upkeep = {
+	trigger = {
+		$trigger$
+		always = yes
+	}
+	energy = $energy$
+}
+
+upkeep = {
+	trigger = {
+		$trigger$
+		owner = { tec_is_biohive = yes }
+	}
+	energy = @[ $energy$ / -2 ] 
+	food = @[ $energy$ / 2 ] 
+}
+
+upkeep = {
+	trigger = {
+		$trigger$
+		owner = { tec_is_bioarch_empire = yes }
+	}
+	energy = @[ $energy$ / -2 ] 
+	food = @[ $energy$ / 2 ] 
+}

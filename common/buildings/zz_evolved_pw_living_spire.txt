@@ -54,73 +54,16 @@ pw_building_living_spire_0 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_half
 		cost = {
-			minerals = @pw_building_cost_half
 			alloys = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_living_spire_0 }
-				}
-			}
-			minerals = @pw_building_cost_extra_half
-		}
-		upkeep = {
-			energy = @pw_building_upkeep_half
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra_half
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			food = @\[ pw_building_cost_half / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_half / -2 ]
-			food = @\[ pw_building_upkeep_half / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			energy = @\[ pw_building_cost_half / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra_half
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt!
 
@@ -222,82 +165,21 @@ pw_building_living_spire_1 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_half
 		cost = {
-			minerals = @pw_building_cost_half
 			alloys = @pw_building_cost_rare
 			volatile_motes = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_living_spire_1 }
-				}
-			}
-			minerals = @pw_building_cost_extra_half
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_half
 			volatile_motes = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra_half
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
-
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			food = @\[ pw_building_cost_half / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_half / -2 ]
-			food = @\[ pw_building_upkeep_half / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			energy = @\[ pw_building_cost_half / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra_half
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt!
 
@@ -309,26 +191,55 @@ pw_building_living_spire_1 = {
 				tec_is_elysium = yes
 				tec_is_habitat = yes
 				tec_is_ecoworld = yes
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 5
-			job_clerk_add = 2
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 2
+		mult = 1
+		trigger = "
+		NOR = {
+			tec_is_ringworld = yes
+			tec_is_elysium = yes
+			tec_is_habitat = yes
+			tec_is_ecoworld = yes
+			tec_is_city_world = yes
+			tec_is_modded_space_arcology = yes
+		}
+		"
+		display = with_desc
+	}
+
 
 	#Habitat
 	triggered_planet_modifier = {
 		potential = {
 			tec_is_habitat = yes
-			tec_pw_is_arcology_habitat = no
+			tec_is_arcology_habitat = no
 		}
 		modifier = {
 			planet_housing_add = 4
-			job_clerk_add = 2
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 2
+		mult = 1
+		trigger = "
+			tec_is_habitat = yes
+			tec_is_arcology_habitat = no
+		"
+		display = with_desc
+	}
+
 
 	# Arcology habitat or Elysium
 	triggered_planet_modifier = {
@@ -336,31 +247,57 @@ pw_building_living_spire_1 = {
 			OR = {
 				AND = {
 					tec_is_habitat = yes
-					tec_pw_is_arcology_habitat = yes
+					tec_is_arcology_habitat = yes
 				}
 				tec_is_elysium = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 8
-			job_clerk_add = 3
 		}
 	}
 
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 3
+		mult = 1
+		trigger = "
+			OR = {
+				AND = {
+					tec_is_habitat = yes
+					tec_is_arcology_habitat = yes
+				}
+				tec_is_elysium = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ecu
 	triggered_planet_modifier = {
 		potential = {
 			OR = {
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
 				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 10
-			job_clerk_add = 4
 		}
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 4
+		mult = 1
+		trigger = "
+			OR = {
+				tec_is_city_world = yes
+				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ring World
 	triggered_planet_modifier = {
 		potential = {
@@ -368,107 +305,35 @@ pw_building_living_spire_1 = {
 		}
 		modifier = {
 			planet_housing_add = 20
-			job_clerk_add = 8
 		}
+	}
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 8
+		mult = 1
+		trigger = "	
+			tec_is_ringworld = yes
+		"
+		display = with_desc
 	}
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
-	}
-
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Medical Worker
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { 
-				tec_pw_is_synthetic_ascended = no 
-				has_toxic_baths = no
-			}
-		}
-		modifier = {
-			job_healthcare_add = 1
-		}
-	}
-
-	#Roboticist
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		modifier = {
-			job_roboticist_add = 1
-		}
-	}
-
-	#Spa Attendants (1) (only mutagenic spas)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				tec_pw_is_synthetic_ascended = no
-				has_toxic_baths = yes
-			}
-		}
-		modifier = {
-			job_bath_attendant_add = 1
-		}
+	inline_script = {
+		script = buildings/effects/inline_tec_pw_living_spire_healthcare
+		count = 1
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from ambition
 	triggered_planet_modifier = {
@@ -483,80 +348,6 @@ pw_building_living_spire_1 = {
 
 	triggered_desc = {
 		text = pw_planet_wonder_lb
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-	#Medical Worker
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = no }
-		}
-		text = job_healthcare_effect_desc
-	}
-	#Roboticist
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		text = job_roboticist_effect_desc
-	}
-	#Bath Attendant
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				NOT = { has_ascension_perk = ap_synthetic_evolution }
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_desc
-	}
-	#Clerk
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_clerk_effect_desc
 	}
 
 	ai_weight = {
@@ -649,83 +440,24 @@ pw_building_living_spire_2 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base
 		cost = {
-			minerals = @pw_building_cost
 			alloys = @pw_building_cost_advanced
 			exotic_gases = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_living_spire_2 }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			volatile_motes = @pw_building_upkeep_rare_1
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep / -2 ]
-			food = @\[ pw_building_upkeep / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
+
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt!
 
@@ -737,26 +469,55 @@ pw_building_living_spire_2 = {
 				tec_is_elysium = yes
 				tec_is_habitat = yes
 				tec_is_ecoworld = yes
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 10
-			job_clerk_add = 4
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 4
+		mult = 1
+		trigger = "
+		NOR = {
+			tec_is_ringworld = yes
+			tec_is_elysium = yes
+			tec_is_habitat = yes
+			tec_is_ecoworld = yes
+			tec_is_city_world = yes
+			tec_is_modded_space_arcology = yes
+		}
+		"
+		display = with_desc
+	}
+
 
 	#Habitat
 	triggered_planet_modifier = {
 		potential = {
 			tec_is_habitat = yes
-			tec_pw_is_arcology_habitat = no
+			tec_is_arcology_habitat = no
 		}
 		modifier = {
 			planet_housing_add = 8
-			job_clerk_add = 2
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 3
+		mult = 1
+		trigger = "
+			tec_is_habitat = yes
+			tec_is_arcology_habitat = no
+		"
+		display = with_desc
+	}
+
 
 	# Arcology habitat or Elysium
 	triggered_planet_modifier = {
@@ -764,31 +525,57 @@ pw_building_living_spire_2 = {
 			OR = {
 				AND = {
 					tec_is_habitat = yes
-					tec_pw_is_arcology_habitat = yes
+					tec_is_arcology_habitat = yes
 				}
 				tec_is_elysium = yes
 			}
 		}
 		modifier = {
-			planet_housing_add = 16
-			job_clerk_add = 6
+			planet_housing_add = 15
 		}
 	}
 
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 5
+		mult = 1
+		trigger = "
+			OR = {
+				AND = {
+					tec_is_habitat = yes
+					tec_is_arcology_habitat = yes
+				}
+				tec_is_elysium = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ecu
 	triggered_planet_modifier = {
 		potential = {
 			OR = {
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
 				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 20
-			job_clerk_add = 8
 		}
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 8
+		mult = 1
+		trigger = "
+			OR = {
+				tec_is_city_world = yes
+				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ring World
 	triggered_planet_modifier = {
 		potential = {
@@ -796,106 +583,44 @@ pw_building_living_spire_2 = {
 		}
 		modifier = {
 			planet_housing_add = 30
-			job_clerk_add = 12
 		}
+	}
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 12
+		mult = 1
+		trigger = "	
+			tec_is_ringworld = yes
+		"
+		display = with_desc
 	}
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 1
-		}
-	}
-
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 1
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 1
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 1
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 1
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Merchant
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = merchant
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_merchant_add = 1
-		}
+		"
+		display = with_desc
 	}
 
-	#Medical Worker (No Ascension Path)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { 
-				tec_pw_is_synthetic_ascended = no 
-		
-				has_toxic_baths = no
-			}
-		}
-		modifier = {
-			job_healthcare_add = 1
-		}
-	}
-
-	#Medical Worker (No Ascension Path)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				tec_pw_is_synthetic_ascended = no 
-				has_toxic_baths = yes
-			}
-		}
-		modifier = {
-			job_bath_attendant_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		modifier = {
-			job_roboticist_add = 1
-		}
+	#Medical Worker
+	inline_script = {
+		script = buildings/effects/inline_tec_pw_living_spire_healthcare
+		count = 1
 	}
 
 	# Psionic
@@ -947,67 +672,23 @@ pw_building_living_spire_2 = {
 	}
 
 	#Enforcer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_has_psionic_ascension_path = no }
-		}
-		modifier = {
-			job_enforcer_add = 1
-		}
-	}
-
-	#Telepath
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = {  tec_has_psionic_ascension_path = yes }
-		}
-		modifier = {
-			job_telepath_add = 1
-		}
+	inline_script = {
+		script = buildings/effects/inline_tec_pw_enforcer
+		count = 1
+		trigger = ""
 	}
 
 	#Entertainer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_pacifist = yes
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		modifier = {
-			job_entertainer_add = 2
-		}
-	}
-
-	#Duelist
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_pacifist = yes
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		modifier = {
-			job_duelist_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_entertainer
+		count = 2
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from ambition
 	triggered_planet_modifier = {
@@ -1023,116 +704,7 @@ pw_building_living_spire_2 = {
 	triggered_desc = {
 		text = pw_planet_wonder_lb
 	}
-	#Administrator
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-	#Medical Worker
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				tec_pw_is_synthetic_ascended = no 
-				has_toxic_baths = no
-			}
-		}
-		text = job_healthcare_effect_desc
-	}
-	#Bath Attendant
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_pw_is_synthetic_ascended = no
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_desc
-	}
-	#Roboticist
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		text = job_roboticist_effect_desc
-	}
-	#Clerk
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_clerk_effect_desc
-	}
-	#Enforcer
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_has_psionic_ascension_path = no }
-		}
-		text = job_enforcer_effect_desc
-	}
-	#Telepath
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_has_psionic_ascension_path = yes }
-		}
-		text = job_telepath_effect_desc
-	}
-	#Entertainer
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			NOT = { owner = { has_valid_civic = civic_warrior_culture }}
-		}
-		text = job_entertainer_effect_desc
-	}
-	#Duelist
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { has_valid_civic = civic_warrior_culture }
-		}
-		text = job_duelist_effect_desc
-	}
-
+	
 	ai_weight = {
 		weight = 65
 		modifier = {
@@ -1219,8 +791,8 @@ pw_building_living_spire_3 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			alloys = @pw_building_cost_advanced
 			rare_crystals = @pw_building_cost_rare
 		}
@@ -1228,83 +800,23 @@ pw_building_living_spire_3 = {
 			minerals = @pw_building_cost_extra
 			alloys = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_living_spire_3 }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			volatile_motes = @pw_building_upkeep_rare_1
 			exotic_gases = @pw_building_upkeep_rare_1
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy = @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Cannot be Gestalt!
 
-	#Regular Planets
 	#Regular Planets
 	triggered_planet_modifier = {
 		potential = {
@@ -1313,26 +825,55 @@ pw_building_living_spire_3 = {
 				tec_is_elysium = yes
 				tec_is_habitat = yes
 				tec_is_ecoworld = yes
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 15
-			job_clerk_add = 10
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 10
+		mult = 1
+		trigger = "
+		NOR = {
+			tec_is_ringworld = yes
+			tec_is_elysium = yes
+			tec_is_habitat = yes
+			tec_is_ecoworld = yes
+			tec_is_city_world = yes
+			tec_is_modded_space_arcology = yes
+		}
+		"
+		display = with_desc
+	}
+
 
 	#Habitat
 	triggered_planet_modifier = {
 		potential = {
 			tec_is_habitat = yes
-			tec_pw_is_arcology_habitat = no
+			tec_is_arcology_habitat = no
 		}
 		modifier = {
 			planet_housing_add = 10
-			job_clerk_add = 5
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 5
+		mult = 1
+		trigger = "
+			tec_is_habitat = yes
+			tec_is_arcology_habitat = no
+		"
+		display = with_desc
+	}
+
 
 	# Arcology habitat or Elysium
 	triggered_planet_modifier = {
@@ -1340,31 +881,57 @@ pw_building_living_spire_3 = {
 			OR = {
 				AND = {
 					tec_is_habitat = yes
-					tec_pw_is_arcology_habitat = yes
+					tec_is_arcology_habitat = yes
 				}
 				tec_is_elysium = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 20
-			job_clerk_add = 12
 		}
 	}
 
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 12
+		mult = 1
+		trigger = "
+			OR = {
+				AND = {
+					tec_is_habitat = yes
+					tec_is_arcology_habitat = yes
+				}
+				tec_is_elysium = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ecu
 	triggered_planet_modifier = {
 		potential = {
 			OR = {
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
 				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 30
-			job_clerk_add = 15
 		}
 	}
-
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 15
+		mult = 1
+		trigger = "
+			OR = {
+				tec_is_city_world = yes
+				tec_is_ecoworld = yes
+				tec_is_modded_space_arcology = yes
+			}
+		"
+		display = with_desc
+	}
 	#Ring World
 	triggered_planet_modifier = {
 		potential = {
@@ -1372,106 +939,45 @@ pw_building_living_spire_3 = {
 		}
 		modifier = {
 			planet_housing_add = 40
-			job_clerk_add = 20
 		}
+	}
+	inline_script = {
+		script = jobs/inline_evolved_clerk
+		count = 20
+		mult = 1
+		trigger = "	
+			tec_is_ringworld = yes
+		"
+		display = with_desc
 	}
 
 	#Administrator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		modifier = {
-			job_politician_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_politician
+		count = 2
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
-	# Computator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = no }
-		}
-		modifier = {
-			job_tec_ai_computator_add = 2
-		}
-	}
-
-	# Ordinator
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = yes }
-			owner = { is_spiritualist = yes }
-		}
-		modifier = {
-			job_tec_ai_high_ordinator_add = 2
-		}
-	}
-
-	#Executive
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_executive_add = 2
-		}
-	}
 
 	#Merchant
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = merchant
+		count = 1
+		mult = 1
+		trigger = "
 			exists = owner
 			owner = { is_megacorp = yes }
-		}
-		modifier = {
-			job_merchant_add = 1
-		}
+		"
+		display = with_desc
 	}
 
 	#Medical Worker (No Ascension Path)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				tec_pw_is_synthetic_ascended = no
-				has_toxic_baths = no
-			}
-		}
-		modifier = {
-			job_healthcare_add = 2
-		}
-	}
-
-	#Spa Attendants (only mutagenic spas) (No Ascension Path)
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = {
-				tec_pw_is_synthetic_ascended = no
-				has_toxic_baths = yes
-			}
-		}
-		modifier = {
-			job_bath_attendant_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		modifier = {
-			job_roboticist_add = 2
-		}
+	inline_script = {
+		script = buildings/effects/inline_tec_pw_living_spire_healthcare
+		count = 2
 	}
 
 	# Psionic
@@ -1523,67 +1029,23 @@ pw_building_living_spire_3 = {
 	}
 
 	#Enforcer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = { tec_has_psionic_ascension_path = no }
-		}
-		modifier = {
-			job_enforcer_add = 2
-		}
-	}
-
-	#Telepath
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { is_regular_empire = yes }
-			owner = {  tec_has_psionic_ascension_path = yes }
-		}
-		modifier = {
-			job_telepath_add = 2
-		}
+	inline_script = {
+		script = buildings/effects/inline_tec_pw_enforcer
+		count = 2
+		trigger = ""
 	}
 
 	#Entertainer
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_pacifist = yes
-				NOT = { has_valid_civic = civic_warrior_culture }
-			}
-		}
-		modifier = {
-			job_entertainer_add = 3
-		}
-	}
-
-	#Duelist
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = {
-				is_pacifist = yes
-				has_valid_civic = civic_warrior_culture
-			}
-		}
-		modifier = {
-			job_duelist_add = 3
-		}
+	inline_script = {
+		script = jobs/inline_evolved_entertainer
+		count = 3
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from ambition
 	triggered_planet_modifier = {
@@ -1598,118 +1060,6 @@ pw_building_living_spire_3 = {
 
 	triggered_desc = {
 		text = pw_planet_wonder_lb
-	}
-
-	#Administrator
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = no }
-		}
-		text = job_politician_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = no
-			}
-		}
-		text = job_tec_ai_computator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_is_aiauth_empire = yes
-				is_spiritualist = yes
-			}
-		}
-		text = job_tec_ai_high_ordinator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_is_aiauth_empire = no }
-			owner = { is_megacorp = yes }
-		}
-		text = job_executive_effect_desc
-	}
-
-	#Medical Worker
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				tec_pw_is_synthetic_ascended = no 
-				has_toxic_baths = no 
-			}
-		}
-		text = job_healthcare_effect_desc
-	}
-
-	#Bath Attendant
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_pw_is_synthetic_ascended = no
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_desc
-	}
-	#Roboticist
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_pw_is_synthetic_ascended = yes }
-		}
-		text = job_roboticist_effect_desc
-	}
-	#Clerk
-	triggered_desc = {
-		trigger = {
-			exists = owner
-		}
-		text = job_clerk_effect_desc
-	}
-	#Enforcer
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_has_psionic_ascension_path = no }
-		}
-		text = job_enforcer_effect_desc
-	}
-	#Telepath
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { tec_has_psionic_ascension_path = yes }
-		}
-		text = job_telepath_effect_desc
-	}
-	#Entertainer
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			NOT = { owner = { has_valid_civic = civic_warrior_culture }}
-		}
-		text = job_entertainer_effect_desc
-	}
-	#Duelist
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { has_valid_civic = civic_warrior_culture }
-		}
-		text = job_duelist_effect_desc
 	}
 
 	ai_weight = {

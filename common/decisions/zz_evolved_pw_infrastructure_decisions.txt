@@ -4755,8 +4755,8 @@ pw_decision_cu_integrated_replication = {
 
 	allow = {
 		OR = {
-			is_planet_class = pc_machine
-			is_planet_class = pc_hive
+			tec_is_machine_world = yes
+			tec_is_hive_world = yes
 		}
 		has_active_building = pw_building_conduit_of_unity_1
 	}

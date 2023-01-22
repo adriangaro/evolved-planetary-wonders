@@ -1,0 +1,13 @@
+# buildings/resources/inline_tec_pw_wonder_base_expensive
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_cost
+	trigger = ""
+	minerals = @pw_building_cost_upgrade
+}
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_upkeep
+	trigger = ""
+	energy = @pw_building_upkeep_expensive
+}

@@ -15,12 +15,8 @@ tec_pw_is_authoritarian = {
 tec_pw_voidborn_or_arcology_hab = {
 	OR = {
 		owner = { has_ascension_perk = ap_voidborn }
-		tec_pw_is_arcology_habitat = yes
+		tec_is_arcology_habitat = yes
 	}
-}
-
-tec_pw_is_arcology_habitat = {
-	has_planet_flag = tec_arcology_habitat
 }
 
 tec_pw_is_psionic_ascended = {
@@ -48,26 +44,9 @@ tec_pw_is_cybernetic_ascended = {
 	}
 }
 
-tec_pw_is_synthetic_ascended = {
-	OR = {
-		has_ascension_perk = ap_synthetic_evolution
-		has_ascension_perk = ap_tec_replicant
-	}
-}
-
 tec_pw_is_machine_asceneded = {
 	OR = {
 		has_ascension_perk = ap_tec_machine_mechanic_2
-	}
-}
-
-tec_pw_is_ascneded = {
-	OR = {
-		tec_pw_is_psionic_ascended = yes
-		tec_pw_is_biological_ascended = yes
-		tec_pw_is_cybernetic_ascended = yes
-		tec_pw_is_synthetic_ascended = yes
-		tec_pw_is_machine_asceneded = yes
 	}
 }
 
@@ -146,6 +125,7 @@ tec_pw_solipsis_warrior = {
 		has_valid_civic = civic_hive_devouring_swarm
 		has_valid_civic = civic_tec_hive_percussive
 		has_ethic = ethic_gestalt_apathy
+		has_valid_civic = civic_hive_cordyceptic_drones
 	}
 }
 
@@ -185,12 +165,6 @@ tec_pw_solipsis_build = {
 	}
 }
 
-tec_pw_solipsis_broodlord = {
-	OR = {
-		has_valid_civic = civic_tec_hive_eusocial
-	}
-}
-
 tec_pw_is_pluralist_or_socialism = {
 	OR = {
 		is_pluralist = yes
@@ -202,5 +176,12 @@ tec_pw_is_elitist_or_competitive = {
 	OR = {
 		is_elitist = yes
 		is_competitive = yes
+	}
+}
+
+tec_has_psi_corps = {
+	OR = {
+		has_tradition = tr_psionics_psi_corps
+		has_country_flag = tec_unlock_psi_corps
 	}
 }

@@ -1,19 +1,25 @@
 tec_pw_assembly_job_count = {
 	base = 1
 	modifier = {
-		tec_pw_is_ascneded = yes
+		exists = owner
+		owner = { tec_has_main_ascension_finished = yes }
 		add = 1
+	}
+	modifier = {
+		exists = owner
+		owner = { has_toxic_baths = yes }
+		add = -1
 	}
 }
 
 tec_pw_psionic_ascension_spire_score = {
 	base = 0
 	modifier = {
-		tec_pw_is_psionic_ascended = yes
+		tec_has_any_psionic_ascension_path = yes
 		add = 1
 	}
 	modifier = {
-		has_ascension_perk = ap_tec_shroud_harmony
+		has_ascension_perk = ap_tec_psionic_ascendance
 		add = 1
 	}
 }
@@ -21,7 +27,7 @@ tec_pw_psionic_ascension_spire_score = {
 tec_pw_biological_ascension_spire_score = {
 	base = 0
 	modifier = {
-		tec_pw_is_biological_ascended = yes
+		tec_has_any_genetic_ascension_path = yes
 		add = 1
 	}
 	modifier = {
@@ -33,7 +39,7 @@ tec_pw_biological_ascension_spire_score = {
 tec_pw_cybernetic_ascension_spire_score = {
 	base = 0
 	modifier = {
-		tec_pw_is_cybernetic_ascended = yes
+		tec_has_any_cybernetic_ascension_path = yes
 		add = 1
 	}
 	modifier = {
@@ -46,7 +52,7 @@ tec_pw_cybernetic_ascension_spire_score = {
 tec_pw_synthetic_ascension_spire_score = {
 	base = 0
 	modifier = {
-		tec_pw_is_synthetic_ascended = yes
+		tec_has_any_synthetic_ascension_path = yes
 		add = 1
 	}
 	modifier = {
@@ -55,153 +61,73 @@ tec_pw_synthetic_ascension_spire_score = {
 	}
 }
 
-# Factor is used to scale number of districts, useful to make bigger districts provide more value
-pw_districts_value = {
-	complex_trigger_modifier = {
-		trigger = num_districts
-		parameters = {
-			type = $TYPE$
-		}
-		[[FACTOR]multiplier = $FACTOR$]
-		mode = add
-	}
-}
-
-pw_buildings_value = {
-	complex_trigger_modifier = {
-		trigger = num_buildings
-		parameters = {
-			type = $TYPE$
-		}
-		[[FACTOR]multiplier = $FACTOR$]
-		mode = add
-	}
-}
 
 pw_farming_value = {
-	add = value:pw_farming_districts_value
-	add = value:pw_farming_buildings_value
+	add = value:farming_districts_value
+	add = value:farming_buildings_value
 }
 
-pw_farming_districts_value = {
-	# Normal
-	add = value:pw_districts_value|TYPE|district_farming|
-	add = value:pw_districts_value|TYPE|district_farming_uncapped|
-	# Habitat
-	modifier = {
-		has_designation = col_habitat_farming
-		NOT = { has_global_flag = stellarisevolved }
-		add = value:pw_districts_value|TYPE|district|FACTOR|0.5|
-	}
-	# RW
-	add = value:pw_districts_value|TYPE|district_rw_farming|FACTOR|4|
-	# Evovled
-	add = value:pw_districts_value|TYPE|district_tec_aqua_farming|
-	add = value:pw_districts_value|TYPE|district_tec_hab_food|
-	add = value:pw_districts_value|TYPE|district_tec_eco_farming|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_eco_aqua_farming|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_proto_farming|
-	# PD
-	add = value:pw_districts_value|TYPE|district_pdhab_food|
-	# Giga
-	add = value:pw_districts_value|TYPE|district_giga_alderson_farming|FACTOR|10|
-	add = value:pw_districts_value|TYPE|district_flusion_farming|FACTOR|3|
-	add = value:pw_districts_value|TYPE|district_giga_frameworld_farming|
-	add = value:pw_districts_value|TYPE|district_penrose_farming|FACTOR|4|
-}
-
-pw_farming_buildings_value = {
-	add = value:pw_buildings_value|TYPE|building_hydroponics_farm|
-
-	# Evolved
-	add = value:pw_buildings_value|TYPE|building_hydroponics_farm_2|
-	add = value:pw_buildings_value|TYPE|building_hydroponics_farm_3|
-	add = value:pw_buildings_value|TYPE|building_tec_biomass_farm_1|
-	add = value:pw_buildings_value|TYPE|building_tec_biomass_farm_2|
-	add = value:pw_buildings_value|TYPE|building_tec_biomass_farm_3|
-}
 
 pw_mining_value = {
-	add = value:pw_mining_districts_value
-	add = value:pw_mining_buildings_value
+	add = value:mining_districts_value
+	add = value:mining_buildings_value
 }
 
-pw_mining_districts_value = {
-	# Normal
-	add = value:pw_districts_value|TYPE|district_mining|
-	add = value:pw_districts_value|TYPE|district_mining_uncapped|
-	add = value:pw_districts_value|TYPE|district_hab_mining|
-	# RW
-	add = value:pw_districts_value|TYPE|district_tec_rw_replicator|FACTOR|4|
-	# Evovled
-	add = value:pw_districts_value|TYPE|district_tec_aqua_mining|
-	add = value:pw_districts_value|TYPE|district_tec_eco_mining|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_eco_aqua_mining|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_proto_mining|
-	# PD
-	add = value:pw_districts_value|TYPE|district_pdhab_mining|
-	# Giga
-	add = value:pw_districts_value|TYPE|district_giga_alderson_mining|FACTOR|10|
-	add = value:pw_districts_value|TYPE|district_flusion_mining|FACTOR|3|
-	add = value:pw_districts_value|TYPE|district_giga_frameworld_mining|
-	add = value:pw_districts_value|TYPE|district_giga_frameworld_decompressor|FACTOR|3|
-	add = value:pw_districts_value|TYPE|district_giga_hab_scavenger|
-
-	
-}
-
-pw_mining_buildings_value = {
-	# Buildings
-	# Evolved
-	add = value:pw_buildings_value|TYPE|building_tec_stripmine_1|
-	add = value:pw_buildings_value|TYPE|building_tec_stripmine_2|
-	add = value:pw_buildings_value|TYPE|building_tec_stripmine_3|
-	add = value:pw_buildings_value|TYPE|building_tec_biohive_mining_1|
-	add = value:pw_buildings_value|TYPE|building_tec_biohive_mining_2|
-	add = value:pw_buildings_value|TYPE|building_tec_biohive_mining_3|
-}
 
 pw_generators_value = {
-	add = value:pw_generators_districts_value
-	add = value:pw_generators_buildings_value
+	add = value:generator_districts_value
+	add = value:generator_buildings_value
 }
 
-pw_generators_districts_value = {
-	# Normal
-	add = value:pw_districts_value|TYPE|district_generator|
-	add = value:pw_districts_value|TYPE|district_generator_uncapped|
-	add = value:pw_districts_value|TYPE|district_hab_energy|
-	# RW
-	add = value:pw_districts_value|TYPE|district_rw_generator|FACTOR|4|
-	# Evovled
-	add = value:pw_districts_value|TYPE|district_tec_aqua_generator|
-	add = value:pw_districts_value|TYPE|district_tec_hab_generator|
-	add = value:pw_districts_value|TYPE|district_tec_eco_generator|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_eco_aqua_generator|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_tec_proto_generator|
-	# PD
-	add = value:pw_districts_value|TYPE|district_pdhab_energy|
-	add = value:pw_districts_value|TYPE|district_archive_energy|
-	# Giga
-	add = value:pw_districts_value|TYPE|district_giga_alderson_generator|FACTOR|10|
-	add = value:pw_districts_value|TYPE|district_flusion_heavy_industry|FACTOR|1.5|
-	add = value:pw_districts_value|TYPE|district_giga_frameworld_generator|
-	add = value:pw_districts_value|TYPE|district_giga_frameworld_penrose|FACTOR|3|
-	add = value:pw_districts_value|TYPE|district_giga_gas_giant_habitat_wind|FACTOR|2|
-	add = value:pw_districts_value|TYPE|district_interstellar_generator|FACTOR|4|
-	add = value:pw_districts_value|TYPE|district_giga_planet_wind|
-	add = value:pw_districts_value|TYPE|district_giga_planet_solar|
-	add = value:pw_districts_value|TYPE|district_giga_planet_geothermal|
-
-	
+pw_curator_count = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger_scope = owner
+		trigger = count_envoy
+		parameters = {
+			limit = {
+				has_envoy_task = { task = improve_relations }
+			}
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger_scope = owner
+		trigger = count_federation_ally
+		mode = add
+	}
 }
 
-pw_generators_buildings_value = {
-	# Evolved
-	add = value:pw_buildings_value|TYPE|building_tec_energrid_1|
-	add = value:pw_buildings_value|TYPE|building_tec_energrid_2|
-	add = value:pw_buildings_value|TYPE|building_tec_energrid_3|
-	add = value:pw_buildings_value|TYPE|building_tec_machine_anglers_extractor|
-	add = value:pw_buildings_value|TYPE|building_tec_machine_anglers_extractor_on|
-	add = value:pw_buildings_value|TYPE|building_tec_machine_anglers_nexus_A|
+pw_deg_curator_count = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger_scope = owner
+		trigger = count_envoy
+		parameters = {
+			limit = {
+				has_envoy_task = { task = harm_relations }
+			}
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger_scope = owner
+		trigger = count_rival_country
+		mode = add
+	}
+	modifier = {
+		exists = owner
+		owner = { is_at_war = yes }
+		add = 2
+	}
+	modifier = {
+		exists = owner
+		owner = { 
+			OR = {
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_inwards_perfection
+			}
+		}
+		add = 3
+	}
 }

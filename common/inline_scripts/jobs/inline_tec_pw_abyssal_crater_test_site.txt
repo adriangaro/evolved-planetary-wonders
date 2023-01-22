@@ -1,0 +1,38 @@
+# jobs/inline_tec_pw_abyssal_crater_test_site
+
+inline_script = {
+	script = jobs/inline_evolved_job
+	job = pw_researcher_abyssal_crater_test_site
+	display = $display$
+	count = $count$
+	mult = $mult$
+	trigger = "
+		exists = owner
+		$trigger$
+		owner = { is_regular_empire = yes }
+	"
+}
+inline_script = {
+	script = jobs/inline_evolved_job
+	job = pw_brain_drone_abyssal_crater_test_site
+	display = $display$
+	count = $count$
+	mult = $mult$
+	trigger = "
+		exists = owner
+		$trigger$
+		owner = { is_hive_empire = yes }
+	"
+}
+inline_script = {
+	script = jobs/inline_evolved_job
+	job = pw_calculator_abyssal_crater_test_site
+	display = $display$
+	count = $count$
+	mult = $mult$
+	trigger = "
+		exists = owner
+		$trigger$
+		owner = { is_machine_empire = yes }
+	"
+}

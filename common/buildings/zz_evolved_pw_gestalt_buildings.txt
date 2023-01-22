@@ -56,73 +56,18 @@ pw_building_conduit_of_unity_0 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_half
 		cost = {
-			minerals = @pw_building_cost_half
 			alloys = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_conduit_of_unity_0 }
-				}
-			}
-			minerals = @pw_building_cost_extra_half
-		}
-		upkeep = {
-			energy = @pw_building_upkeep_half
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra_half
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra_half
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			food = @\[ pw_building_cost_half / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_half / -2 ]
-			food = @\[ pw_building_upkeep_half / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost_half / -2 ]
-			energy =  @\[ pw_building_cost_half / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Must be Gestalt (Machine OR Hive)!
 
@@ -220,82 +165,23 @@ pw_building_conduit_of_unity_1 = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
-			minerals = @pw_building_cost
 			alloys = @pw_building_cost_advanced
 			rare_crystals = @pw_building_cost_rare
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_conduit_of_unity_1 }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			rare_crystals = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
-				planet = {
-					pw_has_any_additional_planetary_wonder = yes
-				}
-			}
-			energy = @pw_building_upkeep_extra
-		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy =  @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	#Reminder: Must be Gestalt (Machine OR Hive)!
 
@@ -307,29 +193,59 @@ pw_building_conduit_of_unity_1 = {
 				tec_is_elysium = yes
 				tec_is_habitat = yes
 
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
 				tec_is_ecoworld = yes
-				is_planet_class = pc_machine
-				is_planet_class = pc_hive
+				tec_is_machine_world = yes
+				tec_is_hive_world = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 8
-			job_maintenance_drone_add = 5
 		}
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 5
+		mult = 1
+		trigger = "
+			NOR = {
+				tec_is_ringworld = yes
+				tec_is_elysium = yes
+				tec_is_habitat = yes
+
+				tec_is_city_world = yes
+				tec_is_ecoworld = yes
+				tec_is_machine_world = yes
+				tec_is_hive_world = yes
+				tec_is_modded_space_arcology = yes
+			}
+		"
+		display = with_desc
 	}
 
 	#Habitat
 	triggered_planet_modifier = {
 		potential = {
 			tec_is_habitat = yes
-			tec_pw_is_arcology_habitat = no
+			tec_is_arcology_habitat = no
 		}
 		modifier = {
 			planet_housing_add = 6
-			job_maintenance_drone_add = 3
 		}
 	}
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 3
+		mult = 1
+		trigger = "	
+			tec_is_habitat = yes
+			tec_is_arcology_habitat = no
+		"
+		display = with_desc
+	}
+
 
 	# Arcology habitat or Elysium
 	triggered_planet_modifier = {
@@ -337,31 +253,61 @@ pw_building_conduit_of_unity_1 = {
 			OR = {
 				AND = {
 					tec_is_habitat = yes
-					tec_pw_is_arcology_habitat = yes
+					tec_is_arcology_habitat = yes
 				}
 				tec_is_elysium = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 12
-			job_maintenance_drone_add = 6
 		}
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 6
+		mult = 1
+		trigger = "	
+			OR = {
+				AND = {
+					tec_is_habitat = yes
+					tec_is_arcology_habitat = yes
+				}
+				tec_is_elysium = yes
+			}
+			"
+		display = with_desc
 	}
 
 	#Ecu
 	triggered_planet_modifier = {
 		potential = {
 			OR = {
-				tec_is_city_planet = yes
+				tec_is_city_world = yes
 				tec_is_ecoworld = yes
-				is_planet_class = pc_machine
-				is_planet_class = pc_hive
+				tec_is_machine_world = yes
+				tec_is_hive_world = yes
 			}
 		}
 		modifier = {
 			planet_housing_add = 16
-			job_maintenance_drone_add = 10
 		}
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 10
+		mult = 1
+		trigger = "	
+			OR = {
+				tec_is_city_world = yes
+				tec_is_ecoworld = yes
+				tec_is_machine_world = yes
+				tec_is_hive_world = yes
+				tec_is_modded_space_arcology = yes
+			}
+		"
+		display = with_desc
 	}
 
 	#Ring World
@@ -371,187 +317,156 @@ pw_building_conduit_of_unity_1 = {
 		}
 		modifier = {
 			planet_housing_add = 24
-			job_maintenance_drone_add = 15
 		}
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 15
+		mult = 1
+		trigger = "	
+			tec_is_ringworld = yes
+		"
+		display = with_desc
 	}
 
 	#Patrol Drones
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_gestalt = yes
-			}
-		}
-		modifier = {
-			job_patrol_drone_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_patrol_drone
+		count = 2
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Replicator/Coordinator
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_machine_empire = yes
-			}
-		}
-		modifier = {
-			job_coordinator_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_coordinator
+		count = 2
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	#Spawning Drone/Synapsis
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = yes
-			}
-		}
-		modifier = {
-			job_synapse_drone_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_cybernetic_hive = yes
-			}
-		}
-		modifier = {
-			job_tec_network_drone_add = 2
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-		}
-		modifier = {
-			job_tec_resonance_drone_add = 2
-		}
+	inline_script = {
+		script = jobs/inline_evolved_synapse
+		count = 2
+		mult = 1
+		trigger = ""
+		display = with_desc
 	}
 
 	# Assembly
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_machine_empire = yes
-				OR = {
-					tec_has_assembly_buildings = no
-					tec_has_machine_buildings = yes
-				}
-			}
-		}
-		modifier = {
-			job_replicator_add = 1
-			
-		}
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = replicator
+		count = 2
 		mult = value:tec_pw_assembly_job_count
+		trigger = "
+			exists = owner
+			owner = {
+				is_machine_empire = yes		
+			}
+			OR = {
+				tec_has_assembly_buildings = no
+				tec_has_machine_buildings = yes
+			}
+		"
+		display = with_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = spawning_drone
+		count = 1
+		mult = value:tec_pw_assembly_job_count
+		trigger = "
+			exists = owner
 			owner = {
 				is_hive_empire = yes
-				OR = {
-					tec_has_assembly_buildings = no
-					tec_has_spawning_buildings = yes
-				}
 			}
-		}
-		modifier = {
-			job_spawning_drone_add = 1
-			
-		}
-		mult = value:tec_pw_assembly_job_count
+			OR = {
+				tec_has_assembly_buildings = no
+				tec_has_spawning_buildings = yes
+			}
+		"
+		display = with_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				tec_has_robotic_buildings = yes
-			}
-		}
-		modifier = {
-			job_tec_replicator_drone_add = 1
-			
-		}
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_replicator_drone
+		count = 1
 		mult = value:tec_pw_assembly_job_count
+		trigger = "	
+			tec_has_robotic_buildings = yes
+		"
+		display = with_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				OR = {
-					tec_has_cloning_buildings = yes
-					tec_has_genetic_buildings = yes
-				}
-			}
-		}
-		modifier = {
-			job_tec_cloner_drone_add = 1
-			
-		}
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_cloner_drone
+		count = 1
 		mult = value:tec_pw_assembly_job_count
+		trigger = "	
+			OR = {
+				tec_has_cloning_buildings = yes
+				tec_has_genetic_buildings = yes
+			}
+		"
+		display = with_desc
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				OR = {
-					tec_has_bioservant_buildings = yes
-				}
-			}
-		}
-		modifier = {
-			job_tec_bioengineer_drone_add = 1
-			
-		}
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_bioengineer_drone
+		count = 1
 		mult = value:tec_pw_assembly_job_count
+		trigger = "	
+			OR = {
+				tec_has_bioservant_buildings = yes
+			}
+		"
+		display = with_desc
 	}
 
 	#Lubricants
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = bath_attendant_machine
+		count = 1
+		mult = 1
+		trigger = "	
+			exists = owner
 			owner = {
 				is_machine_empire = yes
 				has_toxic_baths = yes
 			}
-		}
-		modifier = {
-			job_bath_attendant_machine_add = 1
-		}
+		"
+		display = with_desc
 	}
 
 	#Permutation
-	triggered_planet_modifier = {
-		potential = {
+
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = bath_attendant_hive
+		count = 1
+		mult = 1
+		trigger = "	
+			exists = owner
 			owner = {
 				is_hive_empire = yes
 				has_toxic_baths = yes
 			}
-		}
-		modifier = {
-			job_bath_attendant_hive_add = 1
-		}
+		"
+		display = with_desc
 	}
 
 	#Stability from ambition
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from ambition
 	triggered_planet_modifier = {
@@ -567,125 +482,7 @@ pw_building_conduit_of_unity_1 = {
 	triggered_desc = {
 		text = pw_planet_wonder_lb
 	}
-	#Patrol
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_patrol_drone_effect_desc
-	}
-	#Coordinator
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_coordinator_effect_desc
-	}
-	#Synapsis
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_synapse_drone_effect_desc
-	}
-	#Maintenance
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_machine_empire = yes }
-		}
-		text = job_maintenance_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				OR = {
-					tec_has_assembly_buildings = no
-					tec_has_machine_buildings = yes
-				}
-			}
-		}
-		text = job_replicator_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				OR = {
-					tec_has_assembly_buildings = no
-					tec_has_spawning_buildings = yes
-				}
-			}
-		}
-		text = job_spawning_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				tec_has_robotic_buildings = yes
-			}
-		}
-		text = job_tec_replicator_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				OR = {
-					tec_has_cloning_buildings = yes
-					tec_has_genetic_buildings = yes
-				}
-			}
-		}
-		text = job_tec_cloner_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				OR = {
-					tec_has_bioservant_buildings = yes
-				}
-			}
-		}
-		text =job_tec_bioengineer_drone_effect_desc
-	}
-
-	#Lubricant
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_machine_empire = yes
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_machine_desc
-	}
-	#Permutation
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_hive_desc
-	}
-
+	
 	ai_weight = {
 		weight = 70
 		modifier = {
@@ -753,7 +550,7 @@ pw_building_enigma_engine = {
 		pw_can_build_planetary_wonder = yes #Check if there is space for the Wonder
 		OR = {
 			is_capital = yes
-			is_planet_class = pc_machine
+			tec_is_machine_world = yes
 		}
 
 		# Empire Unique:
@@ -763,7 +560,7 @@ pw_building_enigma_engine = {
 	destroy_trigger = {
 		NOR = {
 			is_capital = yes
-			is_planet_class = pc_machine
+			tec_is_machine_world = yes
 		}
 	}
 
@@ -773,11 +570,11 @@ pw_building_enigma_engine = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
 			trigger = {
 				owner = { has_ancrel = yes }
 			}
-			minerals = @pw_building_cost
 			alloys = @pw_building_cost_advanced
 			minor_artifacts = @pw_building_cost_minor_artifact
 		}
@@ -785,96 +582,29 @@ pw_building_enigma_engine = {
 			trigger = {
 				owner = { has_ancrel = no }
 			}
-			minerals = @pw_building_cost_half
 			alloys = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_enigma_engine }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					has_designation = col_capital_machine
-				}
-			}
-			minerals = -500
-		}
 		upkeep = {
-			energy = @pw_building_upkeep_expensive
 			alloys = @pw_building_upkeep
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_designation = col_capital_machine
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					has_designation = col_capital_machine
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy =  @\[ pw_building_cost / 2 ]
-		}
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
 
 	triggered_planet_modifier = {
 		potential = {
@@ -888,15 +618,7 @@ pw_building_enigma_engine = {
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonus from Ambition
 	triggered_planet_modifier = {
@@ -996,7 +718,7 @@ pw_building_solipsist_debate_hall = {
 		pw_can_build_planetary_wonder = yes #Check if there is space for the Wonder
 		OR = {
 			is_capital = yes
-			is_planet_class = pc_hive
+			tec_is_hive_world = yes
 		}
 
 		# Empire Unique:
@@ -1006,7 +728,7 @@ pw_building_solipsist_debate_hall = {
 	destroy_trigger = {
 		NOR = {
 			is_capital = yes
-			is_planet_class = pc_hive
+			tec_is_hive_world = yes
 		}
 	}
 
@@ -1020,11 +742,11 @@ pw_building_solipsist_debate_hall = {
 
 	resources = {
 		category = planet_buildings
+		inline_script = buildings/resources/inline_tec_pw_wonder_base_expensive
 		cost = {
 			trigger = {
 				owner = { has_ancrel = yes }
 			}
-			minerals = @pw_building_cost
 			exotic_gases = @pw_building_cost_rare
 			minor_artifacts = @pw_building_cost_minor_artifact
 		}
@@ -1032,189 +754,130 @@ pw_building_solipsist_debate_hall = {
 			trigger = {
 				owner = { has_ancrel = no }
 			}
-			minerals = @pw_building_cost_half
 			exotic_gases = @pw_building_cost_rare
 			alloys  = @pw_building_cost_advanced
 		}
-		cost = {
-			trigger = {
-				planet = {
-					pw_has_any_planetary_wonder = yes
-					NOT = { has_building_construction = pw_building_solipsist_debate_hall }
-				}
-			}
-			minerals = @pw_building_cost_extra
-		}
-		cost = {
-			trigger = {
-				planet = {
-					has_designation = col_capital_hive
-				}
-			}
-			minerals = -500
-		}
 		upkeep = {
-			energy = @pw_building_upkeep
 			exotic_gases = @pw_building_upkeep_rare_1
 		}
-		upkeep = {
-			trigger = {
+		inline_script = {
+			script =  buildings/resources/inline_tec_pw_wonder_discount
+			trigger = "
 				planet = {
-					pw_has_any_additional_planetary_wonder = yes
+					OR = {
+						has_designation = col_capital_hive
+					}
 				}
-			}
-			energy = @pw_building_upkeep_extra
+			"
 		}
-		upkeep = {
-			trigger = {
-				exists = owner
-				owner = {
-					has_edict = pw_wonders_beyond_ambition
-				}
-			}
-			energy = @pw_building_upkeep_ambition
-		}
-		upkeep = {
-			trigger = {
-				planet = {
-					has_designation = col_capital_hive
-				}
-			}
-			energy = @pw_building_upkeep_discount
-		}
-		produces = {
-			trigger = {
-				exists = owner
-				owner = { has_tradition = tr_pw_monumentality_architecture_parlante }
-			}
-			unity = @pw_unity_production
-		}
+		inline_script = buildings/resources/inline_tec_pw_wonder_extra
+		inline_script = buildings/resources/inline_tec_pw_wonders_beyond_ambition
+		inline_script = buildings/resources/inline_tec_pw_monumentality_architecture_parlante
 
-		# Special resource civics
-		cost = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			food = @\[ pw_building_cost / 2 ]
-		}
-		upkeep = {
-			trigger = {
-				owner = { tec_is_bioarch_empire = yes }
-			}
-			energy =  @\[ pw_building_upkeep_expensive / -2 ]
-			food = @\[ pw_building_upkeep_expensive / 2 ]
-		}
-		cost = {
-			trigger = {
-				owner = { has_valid_civic = civic_tec_machine_digitalization }
-			}
-			minerals = @\[ pw_building_cost / -2 ]
-			energy =  @\[ pw_building_cost / 2 ]
-		}
+		
 	}
 
 	#Reduces district slots without modifier
-	triggered_planet_modifier = {
-		potential = {
-			NOT = { has_modifier = pw_mod_integrated_monuments }
-		}
-		modifier = {
-			planet_max_districts_add = -1
-		}
+	inline_script =  buildings/effects/inline_tec_pw_mod_integrated_monuments
+
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = @pw_job_per_25_pop
+		mult = 1
+		display = per_pop
+		trigger = ""
 	}
 
-	#Non Swarm jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_warrior_drone
+		count = @pw_job_per_50_pop
+		mult = 1
+		display = per_pop
+		trigger = "
 			exists = owner
 			owner = { is_hive_empire = yes }
 			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
-		}
-		modifier = {
-			#Simple
-			job_maintenance_drone_per_pop = @pw_job_per_25_pop
-			job_warrior_drone_per_pop = @pw_job_per_50_pop
-
-			#Complex
-			job_brain_drone_per_pop = @pw_job_per_50_pop
-			job_patrol_drone_per_pop = @pw_job_per_100_pop
-		}
+		"
 	}
 
-	#Swarm jobs
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_warrior_drone
+		count = @pw_job_per_30_pop
+		mult = 1
+		display = per_pop
+		trigger = "
 			exists = owner
+			owner = { is_hive_empire = yes }
 			owner = { has_valid_civic = civic_hive_devouring_swarm }
-		}
-		modifier = {
-			#Simple
-			job_maintenance_drone_per_pop = @pw_job_per_25_pop
-			job_warrior_drone_per_pop = @pw_job_per_30_pop
-
-			#Complex
-			job_patrol_drone_per_pop = @pw_job_per_50_pop
-		}
+		"
 	}
 
-	#Permutation Drones
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_patrol_drone
+		count = @pw_job_per_100_pop
+		mult = 1
+		display = per_pop
+		trigger = "
+			exists = owner
+			owner = { is_hive_empire = yes }
+			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
+		"
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_patrol_drone
+		count = @pw_job_per_50_pop
+		mult = 1
+		display = per_pop
+		trigger = "
+			exists = owner
+			owner = { is_hive_empire = yes }
+			owner = { has_valid_civic = civic_hive_devouring_swarm }
+		"
+	}
+
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		count = @pw_job_per_50_pop
+		mult = 1
+		display = per_pop
+		trigger = "
+			exists = owner
+			owner = { is_hive_empire = yes }
+			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
+		"
+	}
+
+	#Permutation
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = bath_attendant_hive
+		count = 1
+		mult = 1
+		trigger = "	
+			exists = owner
 			owner = {
 				is_hive_empire = yes
 				has_toxic_baths = yes
 			}
-		}
-		modifier = {
-			job_bath_attendant_hive_add = 1
-		}
+		"
+		display = with_desc
+	}
+
+	# Synapse
+	inline_script = {
+		script = jobs/inline_evolved_synapse
+		count = @pw_job_per_50_pop
+		mult = 1
+		display = per_pop
+		trigger = ""
 	}
 
 	triggered_planet_modifier = {
 		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = yes
-			}
-		}
-		modifier = {
-			job_synapse_drone_per_pop = @pw_job_per_50_pop
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_cybernetic_hive = yes
-			}
-		}
-		modifier = {
-			job_tec_network_drone_per_pop = @pw_job_per_50_pop
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				is_hive_empire = yes
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-		}
-		modifier = {
-			job_tec_resonance_drone_per_pop = @pw_job_per_50_pop
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				OR = {
-					tec_has_assembly_buildings = no
-					tec_has_spawning_buildings = yes
-				}
+			OR = {
+				tec_has_assembly_buildings = no
+				tec_has_spawning_buildings = yes
 			}
 		}
 		modifier = {
@@ -1225,7 +888,7 @@ pw_building_solipsist_debate_hall = {
 
 	triggered_planet_modifier = {
 		potential = {
-			owner = {
+			OR = {
 				tec_has_robotic_buildings = yes
 			}
 		}
@@ -1237,11 +900,9 @@ pw_building_solipsist_debate_hall = {
 
 	triggered_planet_modifier = {
 		potential = {
-			owner = {
-				OR = {
-					tec_has_cloning_buildings = yes
-					tec_has_genetic_buildings = yes
-				}
+			OR = {
+				tec_has_cloning_buildings = yes
+				tec_has_genetic_buildings = yes
 			}
 		}
 		modifier = {
@@ -1252,10 +913,8 @@ pw_building_solipsist_debate_hall = {
 
 	triggered_planet_modifier = {
 		potential = {
-			owner = {
-				OR = {
-					tec_has_bioservant_buildings = yes
-				}
+			OR = {
+				tec_has_bioservant_buildings = yes
 			}
 		}
 		modifier = {
@@ -1265,15 +924,7 @@ pw_building_solipsist_debate_hall = {
 	}
 
 	#Stability Bonus
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
-			owner = { has_tradition = tr_pw_monumentality_brutalism }
-		}
-		modifier = {
-			planet_stability_add = @pw_stability_production
-		}
-	}
+	inline_script =  buildings/effects/inline_tec_pw_monumentality_brutalis
 
 	#Bonuses from Ambition (up to 2, depending on Civics)
 	triggered_planet_modifier = {
@@ -1288,59 +939,35 @@ pw_building_solipsist_debate_hall = {
 			pop_amenities_usage_no_happiness_mult = 0.05
 		}
 	}
+
 	# divided attention
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_synapse
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_synapses = yes
-				tec_is_biohive = yes
 			}
-		}
-		modifier = {
-			job_synapse_drone_add = 1
-		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				has_edict = pw_wonders_beyond_ambition
-				tec_pw_solipsis_synapses = yes
-				tec_is_cybernetic_hive = yes
-			}
-		}
-		modifier = {
-			job_tec_network_drone_add = 1
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			owner = {
-				has_edict = pw_wonders_beyond_ambition
-				tec_pw_solipsis_synapses = yes
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-		}
-		modifier = {
-			job_tec_resonance_drone_add = 1
-		}
+		"
 	}
 
 	# civic_hive_natural_neural_network
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_researcher
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_brain = yes
 			}
-		}
-		modifier = {
-			job_brain_drone_add = 1
-		}
+		"
 	}
+
 	triggered_planet_modifier = {
 		potential = {
 			exists = owner
@@ -1401,17 +1028,17 @@ pw_building_solipsist_debate_hall = {
 			planet_jobs_simple_drone_produces_mult = 0.05
 		}
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_warrior_drone
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_warrior = yes
 			}
-		}
-		modifier = {
-			job_warrior_drone_add = 1
-		}
+		"
 	}
 	triggered_planet_modifier = {
 		potential = {
@@ -1425,30 +1052,33 @@ pw_building_solipsist_debate_hall = {
 			planet_crime_no_happiness_mult = -0.10
 		}
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = chronicle_drone
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_is_memorialist_empire = yes
 			}
-		}
-		modifier = {
-			job_chronicle_drone_add = 1
-		}
+		"
 	}
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = catalytic_drone
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				is_catalytic_empire = yes
 			}
-		}
-		modifier = {
-			job_catalytic_drone_add = 1
-		}
+		"
 	}
+
 	triggered_planet_modifier = {
 		potential = {
 			exists = owner
@@ -1456,7 +1086,7 @@ pw_building_solipsist_debate_hall = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_habitability = yes
 			}
-			tec_is_viable_lifegood_planet = no
+			tec_is_perfect_planet = no
 		}
 		modifier = {
 			pop_environment_tolerance = 0.10
@@ -1470,7 +1100,7 @@ pw_building_solipsist_debate_hall = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_habitability = yes
 			}
-			tec_is_viable_lifegood_planet = yes
+			tec_is_perfect_planet = yes
 		}
 		modifier = {
 			planet_carry_cap_add = 20
@@ -1505,17 +1135,18 @@ pw_building_solipsist_debate_hall = {
 	}
 
 	# Evolved
-	triggered_planet_modifier = {
-		potential = {
+	inline_script = {
+		script = jobs/inline_evolved_maintenance_drone
+		count = 1
+		mult = 1
+		display = no_desc
+		trigger = "
 			exists = owner
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				tec_pw_solipsis_maintainance = yes
 			}
-		}
-		modifier = {
-			job_maintenance_drone_add = 1
-		}
+		"
 	}
 
 	triggered_planet_modifier = {
@@ -1531,30 +1162,46 @@ pw_building_solipsist_debate_hall = {
 		}
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_depth_drone
+		count = 2
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
 				is_anglers_empire = yes
 			}
-		}
-		modifier = {
-			job_tec_depth_drone_add = 2
-		}
+		"
 	}
 
-	triggered_planet_modifier = {
-		potential = {
-			exists = owner
+	inline_script = {
+		script = jobs/inline_evolved_job
+		job = tec_broodlord_drone
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
 			owner = {
 				has_edict = pw_wonders_beyond_ambition
-				tec_pw_solipsis_broodlord = yes
+				has_valid_civic = civic_tec_hive_eusocial
 			}
-		}
-		modifier = {
-			job_tec_broodlord_drone_add = 1
-		}
+		"
+	}
+
+	
+	inline_script = {
+		script = jobs/inline_evolved_technician
+		count = 1
+		mult = 1
+		display = with_desc
+		trigger = "
+			owner = {
+				has_edict = pw_wonders_beyond_ambition
+				has_valid_civic = civic_tec_hive_quantum_alloys
+			}
+		"
 	}
 
 	triggered_desc = {
@@ -1567,105 +1214,6 @@ pw_building_solipsist_debate_hall = {
 
 	triggered_desc = {
 		text = pw_solipsist_debate_hall_tooltip
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_maintenance_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_warrior_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_spawning_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-		}
-		text = job_patrol_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes  
-				tec_is_biohive = yes
-			}
-			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
-		}
-		text = job_synapse_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes 
-				tec_is_cybernetic_hive = yes
-			}
-			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
-		}
-		text = job_tec_network_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { 
-				is_hive_empire = yes 
-				tec_is_biohive = no
-				tec_is_cybernetic_hive = no
-			}
-			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
-		}
-		text = job_tec_resonance_drone_effect_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { is_hive_empire = yes }
-			NOT = { owner = { has_valid_civic = civic_hive_devouring_swarm }}
-		}
-		text = job_brain_drone_effect_desc
-	}
-
-	#Permutation
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = {
-				is_hive_empire = yes
-				has_toxic_baths = yes
-			}
-		}
-		text = job_toxic_baths_effect_hive_desc
-	}
-
-	triggered_desc = {
-		trigger = {
-			exists = owner
-			owner = { has_valid_civic = civic_hive_memorialist }
-			owner = { has_edict = pw_wonders_beyond_ambition }
-		}
-		text = job_chronicle_drone_effect_desc
 	}
 
 	on_built = {

@@ -1,0 +1,13 @@
+# buildings/resources/inline_tec_pw_wonder_discount
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_cost
+	trigger = "$trigger$"
+	minerals = @pw_building_cost_discount
+}
+
+inline_script = {
+	script = buildings/resources/inline_tec_pw_wonder_upkeep
+	trigger = "$trigger$"
+	energy = @pw_building_upkeep_discount
+}

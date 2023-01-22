@@ -1,0 +1,37 @@
+# buildings/resources/inline_tec_pw_wonder_cost
+
+cost = {
+	trigger = {
+		$trigger$
+		always = yes
+	}
+	minerals = $minerals$
+}
+
+cost = {
+	trigger = {
+		$trigger$
+		owner = { tec_is_biohive = yes }
+	}
+	
+	minerals = @[ $minerals$ / -2 ] 
+	food = @[ $minerals$ / 2 ] 
+}
+
+cost = {
+	trigger = {
+		$trigger$
+		owner = { tec_is_bioarch_empire = yes }
+	}
+	minerals = @[ $minerals$ / -2 ] 
+	food = @[ $minerals$ / 2 ] 
+}
+
+cost = {	
+	trigger = {
+		$trigger$
+		owner = { tec_is_cyberarch_empire = yes }
+	}
+	minerals = @[ $minerals$ / -2 ] 
+	energy = @[ $minerals$ / 2 ] 
+}

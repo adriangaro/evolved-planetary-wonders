@@ -1,0 +1,44 @@
+# buildings/effects/inline_tec_pw_living_spire_healthcare
+
+#Medical Worker
+inline_script = {
+	script = jobs/inline_evolved_job
+	job = healthcare
+	display = with_desc
+	count = $count$
+	mult = 1
+	trigger = "
+		owner = { 
+			tec_has_synthetic_ascension_path = no 
+			has_toxic_baths = no
+		}
+	"
+}
+
+#Roboticist
+inline_script = {
+	script = jobs/inline_evolved_roboticist
+	display = with_desc
+	count = $count$
+	mult = 1
+	trigger = "
+		owner = { 
+			tec_has_synthetic_ascension_path = yes 
+		}
+	"
+}
+
+#Spa Attendants (1) (only mutagenic spas)
+inline_script = {
+	script = jobs/inline_evolved_job
+	job = bath_attendant
+	display = with_desc
+	count = $count$
+	mult = 1
+	trigger = "
+		owner = { 
+			tec_has_synthetic_ascension_path = no 
+			has_toxic_baths = yes
+		}
+	"
+}

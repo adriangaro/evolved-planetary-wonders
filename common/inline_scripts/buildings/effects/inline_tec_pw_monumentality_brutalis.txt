@@ -1,0 +1,11 @@
+# buildings/effects/inline_tec_pw_monumentality_brutalis
+
+triggered_planet_modifier = {
+	potential = {
+		exists = owner
+		owner = { has_tradition = tr_pw_monumentality_brutalism }
+	}
+	modifier = {
+		planet_stability_add = @pw_stability_production
+	}
+}
