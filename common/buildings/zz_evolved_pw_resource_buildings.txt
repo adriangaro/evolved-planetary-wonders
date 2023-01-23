@@ -244,10 +244,7 @@ pw_building_erebus_fracking_plant = {
 			tec_is_habitat = no
 			AND = {
 				tec_pw_voidborn_or_arcology_hab = yes
-				OR = {
-					has_planet_flag = mining_habitat
-					has_planet_flag = pd_mining_hab
-				}
+				tec_mining_prod_building_exception = yes
 			}
 		}
 	}
@@ -971,7 +968,8 @@ pw_building_demetrius_fields = {
 		NOR = {
 			has_modifier = pw_mod_gaia_unstable_weather
 			has_modifier = resort_colony
-			tec_is_city_world = no
+			tec_is_city_world = yes
+			tec_is_machine_world = yes
 		}
 	}
 
